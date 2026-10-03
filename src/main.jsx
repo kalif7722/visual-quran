@@ -15,6 +15,18 @@ function Home(){const nav=useNavigate(),items=surahs.filter(s=>featured.includes
 function SurahCard({s}){return <Link className="surah-card" to={`/surah/${s.id}/${s.slug}`}><div className="num">{s.id}</div><div><h3>{s.name}</h3><p>{s.meaning}</p></div><span className="ayahs">{s.ayahs} ayahs</span><span className="arrow">→</span></Link>}
 function Surahs(){const[q,setQ]=useState('');const filtered=useMemo(()=>surahs.filter(s=>`${s.id} ${s.name} ${s.meaning}`.toLowerCase().includes(q.toLowerCase())),[q]);return <Shell><section className="page-head"><span className="eyebrow">COMPLETE QURAN</span><h1>All 114 Surahs</h1><p>Search by number, Surah name or English meaning.</p><div className="search"><span>⌕</span><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search Surahs…"/></div></section><section className="section compact"><div className="all-grid">{filtered.map(s=><SurahCard key={s.id}s={s}/>)}</div></section></Shell>}
 
+const navSubtitle=(s,n)=>{
+ if(s.id==='001'){
+   if(n===1)return'Opening';
+   if(n===2)return'Introduction';
+   if(n>=3&&n<=9)return`Verse ${n-2}`;
+   if(n===10)return'Summary';
+   if(n===11)return'Lessons';
+   if(n===12)return'Closing';
+ }
+ return n===1?'Opening':`Slide ${n}`;
+};
+
 function SurahViewer(){
  const{id}=useParams();const s=surahs.find(x=>x.id===id)||surahs[0];
  const[slideCount,setSlideCount]=useState(s.id==='001'?12:1),[index,setIndex]=useState(1),[failed,setFailed]=useState(false),[fullscreen,setFullscreen]=useState(false);
@@ -24,11 +36,11 @@ function SurahViewer(){
  const goPrev=()=>{setIndex(i=>Math.max(1,i-1));setFailed(false)};
  const goNext=()=>{setIndex(i=>Math.min(slideCount,i+1));setFailed(false)};
  const pick=n=>{setIndex(n);setFailed(false)};
- const visual=assetBase&&!failed?<img src={img} onError={()=>setFailed(true)} alt={`${s.name} visual ${index}`}/>:<UploadPlaceholder s={s} index={index}/>;
+ const visual=assetBase&&!failed?<img src={img} onError={()=>setFailed(true)} alt={`${s.name} slide ${index}`}/>:<UploadPlaceholder s={s} index={index}/>;
  return <Shell><section className="viewer-head"><Link to="/surahs">← All Surahs</Link><div><span className="eyebrow">SURAH {s.number}</span><h1>{s.name}</h1><p>{s.meaning} • {s.ayahs} ayahs</p></div><div className="viewer-tools"><button className="secondary small" onClick={()=>setFullscreen(true)}>Full screen</button></div></section>
- <section className="viewer-layout viewer-wide"><aside className="slide-list compact-nav"><div className="slide-title">Visual journey</div>{Array.from({length:slideCount},(_,i)=>i+1).map(n=><button className={n===index?'active':''} onClick={()=>pick(n)} key={n}><span>{String(n).padStart(2,'0')}</span><div><strong>{n===1?'Opening':`Visual ${n}`}</strong><small>{s.id==='001'&&n>=3&&n<=9?`Verse ${n-2}`:'Learning visual'}</small></div></button>)}</aside><div className="stage-wrap stage-dominant"><div className="stage">{visual}</div><div className="stage-controls"><button onClick={goPrev} disabled={index===1}>← Previous</button><span>{index} / {slideCount}</span><button onClick={goNext} disabled={index===slideCount}>Next →</button></div></div></section>
- {fullscreen&&<div className="full full-viewer"><button className="full-close" onClick={()=>setFullscreen(false)}>×</button><button className="full-nav full-prev" onClick={goPrev} disabled={index===1}>‹</button><div className="full-stage">{visual}<div className="full-counter">{index} / {slideCount}</div></div><button className="full-nav full-next" onClick={goNext} disabled={index===slideCount}>›</button></div>}</Shell>
+ <section className="viewer-layout viewer-wide"><aside className="slide-list compact-nav"><div className="slide-title">Journey</div>{Array.from({length:slideCount},(_,i)=>i+1).map(n=><button className={n===index?'active':''} onClick={()=>pick(n)} key={n}><span>{String(n).padStart(2,'0')}</span><small>{navSubtitle(s,n)}</small></button>)}</aside><div className="stage-wrap stage-dominant"><div className="stage">{visual}</div><div className="stage-controls"><button onClick={goPrev} disabled={index===1}>← Previous</button><span>{index} / {slideCount}</span><button onClick={goNext} disabled={index===slideCount}>Next →</button></div></div></section>
+ {fullscreen&&<div className="full full-viewer"><button className="full-close" onClick={()=>setFullscreen(false)} aria-label="Close fullscreen">×</button><button className="full-nav full-prev" onClick={goPrev} disabled={index===1} aria-label="Previous slide">‹</button><div className="full-stage">{visual}<div className="full-counter">{index} / {slideCount}</div></div><button className="full-nav full-next" onClick={goNext} disabled={index===slideCount} aria-label="Next slide">›</button></div>}</Shell>
 }
-function UploadPlaceholder({s,index}){return <div className="placeholder"><div className="placeholder-icon">✧</div><h3>Visual ready for upload</h3><p>The page and mapping are already prepared.</p><code>{s.id}-{s.slug}-{String(index).padStart(2,'0')}.webp</code></div>}
+function UploadPlaceholder({s,index}){return <div className="placeholder"><div className="placeholder-icon">✧</div><h3>Slide ready for upload</h3><p>The page and mapping are already prepared.</p><code>{s.id}-{s.slug}-{String(index).padStart(2,'0')}.webp</code></div>}
 function App(){return <BrowserRouter><Routes><Route path="/" element={<Home/>}/><Route path="/surahs" element={<Surahs/>}/><Route path="/surah/:id/:slug" element={<SurahViewer/>}/><Route path="*" element={<Home/>}/></Routes></BrowserRouter>}
 createRoot(document.getElementById('root')).render(<App/>);
