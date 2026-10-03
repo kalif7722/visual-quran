@@ -1,4 +1,4 @@
-import React, {useMemo,useState} from 'react';
+import React, {useEffect,useMemo,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {BrowserRouter,useNavigate,useParams} from 'react-router-dom';
 import {Routes,Route,Link} from 'react-router-dom';
@@ -7,6 +7,7 @@ import './styles.css';
 
 const assetBase=(import.meta.env.VITE_ASSET_BASE_URL||'').replace(/\/$/,'');
 const assetUrl=(s,n,lang='en')=>`${assetBase}/surahs/${s.id}-${s.slug}/${lang}/${s.id}-${s.slug}-${String(n).padStart(2,'0')}.webp`;
+const manifestUrl=s=>`${assetBase}/surahs/${s.id}-${s.slug}/manifest.json`;
 
 function Shell({children}){
   const [open,setOpen]=useState(false);
@@ -70,14 +71,22 @@ function Surahs(){
 
 function SurahViewer(){
   const {id}=useParams(); const s=surahs.find(x=>x.id===id)||surahs[0];
-  const initialCount=s.id==='001'?12:12;
+  const [slideCount,setSlideCount]=useState(s.id==='001'?12:1);
   const [index,setIndex]=useState(1); const [failed,setFailed]=useState(false); const [fullscreen,setFullscreen]=useState(false);
+  useEffect(()=>{
+    setIndex(1); setFailed(false); setSlideCount(s.id==='001'?12:1);
+    if(!assetBase) return;
+    fetch(manifestUrl(s),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(m=>{
+      const count=Number(m?.slides||m?.slideCount||m?.count||0);
+      if(count>0) setSlideCount(count);
+    }).catch(()=>{});
+  },[s.id]);
   const img=assetUrl(s,index,'en');
-  const prev=()=>{setIndex(i=>Math.max(1,i-1));setFailed(false)}; const next=()=>{setIndex(i=>Math.min(initialCount,i+1));setFailed(false)};
+  const prev=()=>{setIndex(i=>Math.max(1,i-1));setFailed(false)}; const next=()=>{setIndex(i=>Math.min(slideCount,i+1));setFailed(false)};
   return <Shell><section className="viewer-head"><Link to="/surahs">← All Surahs</Link><div><span className="eyebrow">SURAH {s.number}</span><h1>{s.name}</h1><p>{s.meaning} • {s.ayahs} ayahs</p></div><div className="viewer-tools"><button className="secondary small" onClick={()=>setFullscreen(true)}>Full screen</button></div></section>
-    <section className="viewer-layout"><aside className="slide-list"><div className="slide-title">Visual journey</div>{Array.from({length:initialCount},(_,i)=>i+1).map(n=><button className={n===index?'active':''} onClick={()=>{setIndex(n);setFailed(false)}} key={n}><span>{String(n).padStart(2,'0')}</span><div><strong>{n===1?'Opening':`Visual ${n}`}</strong><small>{s.id==='001'&&n>=3&&n<=9?`Verse ${n-2}`:'Learning visual'}</small></div></button>)}</aside>
-      <div className="stage-wrap"><div className="stage">{assetBase&&!failed?<img src={img} onError={()=>setFailed(true)} alt={`${s.name} visual ${index}`}/>:<UploadPlaceholder s={s} index={index}/>}</div><div className="stage-controls"><button onClick={prev} disabled={index===1}>← Previous</button><span>{index} / {initialCount}</span><button onClick={next} disabled={index===initialCount}>Next →</button></div></div>
-      <aside className="info-panel"><span className="eyebrow">VISUAL {String(index).padStart(2,'0')}</span><h3>{s.name}</h3><p>This viewer is already wired to Cloudflare R2. Once the matching WebP file is uploaded, it appears here automatically.</p><div className="file-box"><small>Expected file</small><code>{s.id}-{s.slug}-{String(index).padStart(2,'0')}.webp</code></div><div className="note">For Al-Fatihah, 12 visuals are expected from the source presentation.</div></aside>
+    <section className="viewer-layout"><aside className="slide-list"><div className="slide-title">Visual journey</div>{Array.from({length:slideCount},(_,i)=>i+1).map(n=><button className={n===index?'active':''} onClick={()=>{setIndex(n);setFailed(false)}} key={n}><span>{String(n).padStart(2,'0')}</span><div><strong>{n===1?'Opening':`Visual ${n}`}</strong><small>{s.id==='001'&&n>=3&&n<=9?`Verse ${n-2}`:'Learning visual'}</small></div></button>)}</aside>
+      <div className="stage-wrap"><div className="stage">{assetBase&&!failed?<img src={img} onError={()=>setFailed(true)} alt={`${s.name} visual ${index}`}/>:<UploadPlaceholder s={s} index={index}/>}</div><div className="stage-controls"><button onClick={prev} disabled={index===1}>← Previous</button><span>{index} / {slideCount}</span><button onClick={next} disabled={index===slideCount}>Next →</button></div></div>
+      <aside className="info-panel"><span className="eyebrow">VISUAL {String(index).padStart(2,'0')}</span><h3>{s.name}</h3><p>This viewer is wired to Cloudflare R2. Correctly named uploads appear automatically; `manifest.json` controls the number of visuals for each Surah.</p><div className="file-box"><small>Expected file</small><code>{s.id}-{s.slug}-{String(index).padStart(2,'0')}.webp</code></div><div className="note">Upload `manifest.json` beside the language folders with a value such as <code>{`{"slides":12}`}</code>. Al-Fatihah already defaults to 12 visuals.</div></aside>
     </section>{fullscreen&&<div className="full"><button onClick={()=>setFullscreen(false)}>×</button>{assetBase&&!failed?<img src={img} alt="Full screen visual"/>:<UploadPlaceholder s={s} index={index}/>}</div>}</Shell>
 }
 
