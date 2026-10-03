@@ -1,9 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "visual-quran",
+  "main": "./src/worker.js",
   "compatibility_date": "2026-10-03",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/media/*"]
+  },
+  "r2_buckets": [
+    {
+      "binding": "QURAN_ASSETS",
+      "bucket_name": "visual-quran"
+    }
+  ]
 }
