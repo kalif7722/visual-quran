@@ -14,19 +14,23 @@ const manifestUrl=s=>`${assetBase}/surahs/${s.id}-${s.slug}/manifest.json`;
 
 function SurahMenu(){
  const nav=useNavigate();const{id}=useParams();const[currentOpen,setCurrentOpen]=useState(false);const[query,setQuery]=useState('');const ref=useRef(null);
- const current=surahs.find(s=>s.id===id);const filtered=surahs.filter(s=>`${s.id} ${s.name} ${s.meaning}`.toLowerCase().includes(query.toLowerCase()));
+ const current=surahs.find(s=>s.id===id);const currentIndex=current?surahs.findIndex(s=>s.id===current.id):-1;
+ const searched=surahs.filter(s=>`${s.id} ${s.name} ${s.meaning}`.toLowerCase().includes(query.toLowerCase()));
+ const visible=!query.trim()&&currentIndex>=0?[...surahs.slice(currentIndex),...surahs.slice(0,currentIndex)]:searched;
  useEffect(()=>{const close=e=>{if(ref.current&&!ref.current.contains(e.target))setCurrentOpen(false)};document.addEventListener('mousedown',close);return()=>document.removeEventListener('mousedown',close)},[]);
+ const toggle=()=>{setCurrentOpen(v=>{const next=!v;if(next)setQuery('');return next})};
  const choose=s=>{setCurrentOpen(false);setQuery('');nav(`/surah/${s.id}/${s.slug}`)};
  return <div className="surah-menu" ref={ref}>
-  <button className={`surah-menu-trigger ${currentOpen?'open':''}`} onClick={()=>setCurrentOpen(v=>!v)} aria-expanded={currentOpen}>
+  <button className={`surah-menu-trigger ${currentOpen?'open':''}`} onClick={toggle} aria-expanded={currentOpen}>
    <span className="surah-menu-number">{current?Number(current.id):'☰'}</span>
    <span className="surah-menu-label">{current?current.name:'Choose Surah'}</span>
    <span className="surah-menu-chevron">⌄</span>
   </button>
   {currentOpen&&<div className="surah-menu-popover">
    <div className="surah-menu-search"><span>⌕</span><input autoFocus value={query} onChange={e=>setQuery(e.target.value)} placeholder="Find a Surah…"/></div>
-   <div className="surah-menu-list">{filtered.map(s=><button key={s.id} className={current?.id===s.id?'selected':''} onClick={()=>choose(s)}>
-    <span className="menu-num">{String(Number(s.id)).padStart(2,'0')}</span><span className="menu-copy"><strong>{s.name}</strong><small>{s.meaning}</small></span><span className="menu-arrow">→</span>
+   {!query.trim()&&current&&<div className="surah-menu-context">Current Surah first • next Surahs immediately below</div>}
+   <div className="surah-menu-list">{visible.map(s=><button key={s.id} className={current?.id===s.id?'selected':''} onClick={()=>choose(s)}>
+    <span className="menu-num">{String(Number(s.id)).padStart(2,'0')}</span><span className="menu-copy"><strong>{s.name}</strong><small>{s.meaning}{current?.id===s.id?' • Current':''}</small></span><span className="menu-arrow">→</span>
    </button>)}</div>
   </div>}
  </div>
@@ -49,12 +53,13 @@ const navSubtitle=(s,n)=>{
 
 function SurahViewer(){
  const{id}=useParams();const s=surahs.find(x=>x.id===id)||surahs[0];const defaultCount=s.id==='001'?12:s.id==='002'?baqarahSlideCount:1;
+ const currentPos=surahs.findIndex(x=>x.id===s.id);const nextSurah=currentPos>=0&&currentPos<surahs.length-1?surahs[currentPos+1]:null;
  const[slideCount,setSlideCount]=useState(defaultCount),[index,setIndex]=useState(1),[failed,setFailed]=useState(false),[fullscreen,setFullscreen]=useState(false),[collapsed,setCollapsed]=useState(false);
  useEffect(()=>{const count=s.id==='001'?12:s.id==='002'?baqarahSlideCount:1;setIndex(1);setFailed(false);setSlideCount(count);if(!assetBase)return;fetch(manifestUrl(s),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(m=>{const c=Number(m?.slides||m?.slideCount||m?.count||0);if(c>0)setSlideCount(c)}).catch(()=>{})},[s.id]);
  useEffect(()=>{if(!fullscreen)return;const onKey=e=>{if(e.key==='Escape')setFullscreen(false);if(e.key==='ArrowLeft')goPrev();if(e.key==='ArrowRight')goNext()};window.addEventListener('keydown',onKey);return()=>window.removeEventListener('keydown',onKey)},[fullscreen,index,slideCount]);
  const img=assetUrl(s,index,'en');const goPrev=()=>{setIndex(i=>Math.max(1,i-1));setFailed(false)};const goNext=()=>{setIndex(i=>Math.min(slideCount,i+1));setFailed(false)};const pick=n=>{setIndex(n);setFailed(false)};
  const visual=assetBase&&!failed?<img src={img} onError={()=>setFailed(true)} alt={`${s.name} slide ${index}`}/>:<UploadPlaceholder s={s} index={index}/>;const meta=s.id==='002'?baqarahSlideMeta(index):null;
- return <Shell><section className="viewer-head refined-viewer-head"><div className="viewer-breadcrumb"><Link to="/surahs">← All Surahs</Link><span>/</span><strong>{s.name}</strong></div><div className="viewer-identity"><span className="surah-kicker">Surah {Number(s.id)}</span><h1>{s.name}</h1><div className="viewer-meta"><span>{s.meaning}</span><i>•</i><span>{s.ayahs} ayahs</span>{meta&&<><i>•</i><span>Verses {meta.verses}</span></>}</div></div><div className="viewer-tools"><button className="fullscreen-pill" onClick={()=>setFullscreen(true)}><span>⛶</span> Full screen</button></div></section>
+ return <Shell><section className="viewer-head refined-viewer-head"><div className="viewer-breadcrumb"><Link to="/surahs">← All Surahs</Link><span>/</span><strong>{s.name}</strong></div><div className="viewer-identity"><span className="surah-kicker">Surah {Number(s.id)}</span><h1>{s.name}</h1><div className="viewer-meta"><span>{s.meaning}</span><i>•</i><span>{s.ayahs} ayahs</span>{meta&&<><i>•</i><span>Verses {meta.verses}</span></>}</div></div><div className="viewer-tools"><button className="fullscreen-pill" onClick={()=>setFullscreen(true)}><span>⛶</span> Full screen</button>{nextSurah&&<Link className="next-surah-link" to={`/surah/${nextSurah.id}/${nextSurah.slug}`}><span>Next Surah</span><strong>{Number(nextSurah.id)}. {nextSurah.name}</strong><b>→</b></Link>}</div></section>
  <section className={`viewer-layout viewer-wide ${collapsed?'rail-collapsed':''}`}><aside className="slide-list compact-nav"><div className="slide-title"><span>{collapsed?'#':'Journey'}</span><button className="rail-toggle" onClick={()=>setCollapsed(v=>!v)} title={collapsed?'Expand navigation':'Collapse navigation'}>{collapsed?'›':'‹'}</button></div>{Array.from({length:slideCount},(_,i)=>i+1).map(n=><button className={n===index?'active':''} onClick={()=>pick(n)} key={n} title={s.id==='002'?`${baqarahSlideMeta(n).sectionTitle} — verses ${baqarahSlideMeta(n).verses}`:navSubtitle(s,n)}><span>{String(n).padStart(2,'0')}</span>{!collapsed&&<small>{navSubtitle(s,n)}</small>}</button>)}</aside><div className="stage-wrap stage-dominant"><div className="stage stage-clickable" onClick={()=>setFullscreen(true)} title="Click to open full screen">{visual}<div className="stage-fullscreen-hint"><span>⛶</span> Open full screen</div></div><div className="stage-controls"><button onClick={goPrev} disabled={index===1}>← Previous</button><span>{index} / {slideCount}</span><button onClick={goNext} disabled={index===slideCount}>Next →</button></div></div></section>
  {fullscreen&&<div className="full full-viewer"><button className="full-close" onClick={()=>setFullscreen(false)} aria-label="Close fullscreen">×</button><button className="full-nav full-prev" onClick={goPrev} disabled={index===1} aria-label="Previous slide">‹</button><div className="full-stage">{visual}<div className="full-counter">{index} / {slideCount}</div></div><button className="full-nav full-next" onClick={goNext} disabled={index===slideCount} aria-label="Next slide">›</button></div>}</Shell>
 }
