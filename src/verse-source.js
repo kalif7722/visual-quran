@@ -1,14 +1,15 @@
 import{surahs}from'./data.js';
-const key='english_rwwad';
+const editions={en:'english_rwwad',ta:'tamil_baqavi'};
 export async function serveVerseChapter(request,{fetchSource=fetch,cache=globalThis.caches?.default}={}){
  const url=new URL(request.url),match=url.pathname.match(/^\/api\/theme-verses\/(\d{1,3})$/),number=Number(match?.[1]);
+ const language=url.searchParams.get('lang')||'en',key=editions[language];
  const s=surahs.find(s=>s.number===number);
- if(request.method!=='GET'||!s)return Response.json({error:'Invalid verse request'},{status:400});
- const cacheKey=new Request(`${url.origin}/api/theme-verses/${number}`);
+ if(request.method!=='GET'||!s||!key)return Response.json({error:'Invalid verse request'},{status:400});
+ const cacheKey=new Request(`${url.origin}/api/theme-verses/${number}?lang=${language}`);
  const cached=await cache?.match(cacheKey);if(cached)return cached;
  try{
   const [metaResponse,chapterResponse]=await Promise.all([
-   fetchSource('https://quranenc.com/api/v1/translations/list/en/',{signal:AbortSignal.timeout(12000)}),
+   fetchSource('https://quranenc.com/api/v1/translations/list/',{signal:AbortSignal.timeout(12000)}),
    fetchSource(`https://quranenc.com/api/v1/translation/sura/${key}/${number}`,{signal:AbortSignal.timeout(12000)})
   ]);
   if(!metaResponse.ok||!chapterResponse.ok)throw Error('Source unavailable');

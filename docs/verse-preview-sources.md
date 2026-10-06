@@ -11,3 +11,5 @@ Each chapter is validated against the canonical site verse count and consecutive
 Balloon interaction: hover or focus on a reference opens the non-modal preview; the adjacent Arabic/EN button toggles it on touch devices. The preview remains interactive and scrollable, closes on Escape, outside pointer input or leaving its hover area, and renders through a document-body portal to avoid card clipping. A source-outage state retains the external read-in-context link and provides retry.
 
 Coverage: every theme passage uses the same component; selected story passages use it too. No audio recordings are fetched or bundled.
+
+Tamil preview uses QuranEnc's complete Abdulhamid Baqawi translation (`tamil_baqavi`), with Arabic, translation and notes preserved. Cache keys include language. Each reference has a separate தமிழ் control; source attribution and edition remain available in collapsed Source details.
