@@ -1,6 +1,9 @@
+import{serveVerseChapter}from'./verse-source.js';
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (url.pathname.startsWith('/api/theme-verses/')) return serveVerseChapter(request);
 
     if (url.pathname.startsWith('/media/')) {
       const key = decodeURIComponent(url.pathname.slice('/media/'.length));

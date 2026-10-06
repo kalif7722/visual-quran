@@ -1,0 +1,28 @@
+import React,{useEffect,useId,useRef,useState}from'react';
+import{createPortal}from'react-dom';
+import{surahs}from'./data';
+import'./verse-balloon.css';
+const chapterCache=new Map();
+export function loadVerseChapter(surah){
+ if(!chapterCache.has(surah))chapterCache.set(surah,fetch(`/api/theme-verses/${surah}`).then(r=>{if(!r.ok)throw new Error('Verse source unavailable');return r.json()}).then(d=>{if(!d.verses?.length||!d.source?.version)throw new Error('Incomplete verse response');return d}).catch(e=>{chapterCache.delete(surah);throw e}));
+ return chapterCache.get(surah);
+}
+export function VerseReference({surah,verses,children}){
+ const[open,setOpen]=useState(false),[data,setData]=useState(null),[error,setError]=useState(false),[position,setPosition]=useState({top:80,left:16,width:540,height:500});
+ const anchor=useRef(null),panel=useRef(null),timer=useRef(null),id=useId();
+ const s=surahs.find(s=>s.number===surah),[start,end=start]=verses.split('-').map(Number);
+ const href=`https://quran.com/${surah}/${verses}`;
+ const close=()=>{clearTimeout(timer.current);setOpen(false)};
+ const show=()=>{clearTimeout(timer.current);setOpen(true)};
+ const delayedClose=()=>{clearTimeout(timer.current);timer.current=setTimeout(()=>setOpen(false),180)};
+ useEffect(()=>()=>clearTimeout(timer.current),[]);
+ useEffect(()=>{if(!open)return;let active=true;setError(false);loadVerseChapter(surah).then(d=>{if(active)setData(d)}).catch(()=>{if(active)setError(true)});return()=>{active=false}},[open,surah]);
+ useEffect(()=>{if(!open)return;const place=()=>{const r=anchor.current?.getBoundingClientRect();if(!r)return;const width=Math.min(560,window.innerWidth-24),height=Math.min(560,window.innerHeight-32);const below=window.innerHeight-r.bottom-12;const top=below>=Math.min(height,300)?r.bottom+8:Math.max(16,r.top-height-8);setPosition({width,height:Math.min(height,window.innerHeight-top-16),left:Math.max(12,Math.min(r.left,window.innerWidth-width-12)),top})};place();const key=e=>{if(e.key==='Escape'){close();if(panel.current?.contains(document.activeElement))anchor.current?.querySelector('button')?.focus()}};const outside=e=>{if(!anchor.current?.contains(e.target)&&!panel.current?.contains(e.target))close()};window.addEventListener('resize',place);window.addEventListener('scroll',place,true);document.addEventListener('keydown',key);document.addEventListener('pointerdown',outside);return()=>{window.removeEventListener('resize',place);window.removeEventListener('scroll',place,true);document.removeEventListener('keydown',key);document.removeEventListener('pointerdown',outside)}},[open]);
+ const rows=data?.verses.filter(v=>v.verse>=start&&v.verse<=end)||[];
+ const complete=rows.length===end-start+1;
+ return <><span ref={anchor} className="verse-reference" onPointerEnter={e=>{if(e.pointerType==='mouse')show()}} onPointerLeave={e=>{if(e.pointerType==='mouse')delayedClose()}}><a className="learn-reference" href={href} target="_blank" rel="noopener noreferrer" onFocus={show} onBlur={delayedClose}>{children||`${surah}:${verses} · Read verses ↗`}</a><button type="button" className="verse-preview-toggle" aria-label={`Preview Arabic and English for ${s.name} ${surah}:${verses}`} aria-expanded={open} aria-controls={open?id:undefined} onFocus={()=>clearTimeout(timer.current)} onBlur={delayedClose} onClick={()=>open?close():show()}>العربية / EN</button></span>{open&&createPortal(<section ref={panel} id={id} className="verse-balloon" style={{top:position.top,left:position.left,width:position.width,maxHeight:position.height}} role="dialog" aria-modal="false" aria-label={`${s.name} ${surah}:${verses} Arabic and English`} onPointerEnter={()=>clearTimeout(timer.current)} onPointerLeave={e=>{if(e.pointerType==='mouse')delayedClose()}} onFocus={()=>clearTimeout(timer.current)} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))delayedClose()}}>
+ <header className="verse-balloon-head"><div><span>READ & REFLECT</span><h3>{s.name} <small>{surah}:{verses}</small></h3></div><button type="button" onClick={close} aria-label="Close verse preview">×</button></header>
+ <div className="verse-balloon-scroll" tabIndex="0" aria-label="Arabic verses and English translation"><p className="verse-balloon-guide">Arabic text · English translation of the meanings</p>{!data&&!error&&<p role="status">Loading verses…</p>}{(error||data&&!complete)&&<div role="status"><p>The verse source is temporarily unavailable.</p><button className="verse-retry" onClick={()=>{setData(null);setError(false);loadVerseChapter(surah).then(setData).catch(()=>setError(true))}}>Try again</button><a href={href} target="_blank" rel="noopener noreferrer">Read the passage on Quran.com ↗</a></div>}{!error&&complete&&rows.map(v=><article className="verse-balloon-ayah" key={v.verse}><span className="verse-ayah-key">{surah}:{v.verse}</span><p className="verse-arabic notranslate" lang="ar" dir="rtl" translate="no">{v.arabic}</p><p className="verse-english notranslate" lang="en" dir="ltr" translate="no">{v.translation}</p>{v.footnotes&&<details className="verse-footnotes"><summary>Translation notes</summary><p className="notranslate" translate="no">{v.footnotes}</p></details>}</article>)}</div>
+ <footer className="verse-balloon-footer">{data&&<div><span>{data.source.title} · v{data.source.version}</span><a href={`https://quranenc.com/en/browse/${data.source.key}/${surah}`} target="_blank" rel="noopener noreferrer">Arabic & translation source: QuranEnc.com ↗</a></div>}<a href={href} target="_blank" rel="noopener noreferrer">Read in context ↗</a></footer>
+ </section>,document.body)}</>
+}
