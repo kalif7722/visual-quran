@@ -9,3 +9,6 @@ Corpus integrity: `scripts/refresh-quran-search.py` retrieves current source met
 Source API and republication terms: https://quranenc.com/en/home/api/
 
 Search runs locally in the browser after loading the selected language. Searches are not sent to a third-party search or AI service. Results are ranked with exact matches first and paginated in batches of 20; Surah and related-topic filters are available. URL parameters preserve the query and translation.
+
+## Cross-language search update
+English and Tamil datasets are paired by Surah/verse key. Every query searches both translations and Arabic, regardless of the display language; matching another translation receives a Cross-language match label. Tamil normalization preserves vowel marks and recognizes word beginnings. Name aliases include firaun/firawn/firoun/Pharaoh and Tamil/Arabic spellings; related terms match source text rather than invented verse references. Tests check result-set parity in both display languages.

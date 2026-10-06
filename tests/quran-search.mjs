@@ -15,3 +15,12 @@ for(const lang of ['en','ta']){
  if(lang==='ta')assert.ok(searchQuran(index,'நோன்பு').results.length>0);
 }
 console.log('Complete English/Tamil corpus, references, Arabic normalization, Ramadan expansion, filters and empty states passed.');
+
+const en=JSON.parse(gunzipSync(readFileSync('public/search/quran-en.json.gz'))).verses,ta=JSON.parse(gunzipSync(readFileSync('public/search/quran-ta.json.gz'))).verses;
+const ei=indexVerses(en,ta),ti=indexVerses(ta,en);
+for(const query of ['firaun','firawn','pharaoh','pharoah','Musa','mercy','parents','Ramadan','நோன்பு','பெற்றோர்','ஃபிர்அவ்ன்','பொறுமை','அல்லாஹ்']){
+ const a=searchQuran(ei,query).results,b=searchQuran(ti,query).results;
+ assert.ok(a.length>0,query+' must find results');assert.deepEqual(a.map(v=>`${v.surah}:${v.verse}`).sort(),b.map(v=>`${v.surah}:${v.verse}`).sort(),query+' language parity');
+ console.log(query,a.length,'verses in both display languages');
+}
+assert.ok(searchQuran(ti,'mercy',{related:false}).results.some(v=>v.match==='Cross-language match'));

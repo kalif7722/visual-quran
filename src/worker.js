@@ -1,7 +1,10 @@
+import{serveSlideList}from'./slide-source.js';
 import{serveVerseChapter}from'./verse-source.js';
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (url.pathname.startsWith('/api/surah-slides/')) return serveSlideList(request,env);
 
     if (url.pathname.startsWith('/api/theme-verses/')) return serveVerseChapter(request);
 
