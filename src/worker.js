@@ -23,6 +23,8 @@ export default {
 
     if (url.pathname.startsWith('/api/theme-verses/')) return withCors(await serveVerseChapter(request));
 
+    if (url.pathname.startsWith('/search/')) return withCors(await env.ASSETS.fetch(request));
+
     if (url.pathname.startsWith('/media/')) {
       const key = decodeURIComponent(url.pathname.slice('/media/'.length));
       if (!key || key.includes('..')) {
