@@ -3,8 +3,9 @@ import{Link,useSearchParams}from'react-router-dom';
 import{surahs}from'./data';
 import{indexVerses,searchQuran}from'./quran-search-engine';
 import'./quran-search.css';
+const runtimeBase=(import.meta.env.VITE_APP_BASE_URL||'').replace(/\/$/,'');
 const corpora=new Map();
-function load(language){if(!corpora.has(language))corpora.set(language,fetch(`/search/quran-${language}.json.gz`).then(r=>{if(!r.ok)throw Error();return new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).json()}).then(d=>{if(d.verses.length!==6236)throw Error();return d}).catch(e=>{corpora.delete(language);throw e}));return corpora.get(language)}
+function load(language){if(!corpora.has(language))corpora.set(language,fetch(`${runtimeBase}/search/quran-${language}.json.gz`).then(r=>{if(!r.ok)throw Error();return new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).json()}).then(d=>{if(d.verses.length!==6236)throw Error();return d}).catch(e=>{corpora.delete(language);throw e}));return corpora.get(language)}
 export function QuranSearch(){
  const[params,setParams]=useSearchParams(),query=params.get('q')||'',language=params.get('lang')?params.get('lang')==='ta'?'ta':'en':(()=>{try{return localStorage.getItem('visual-quran-language')==='ta'?'ta':'en'}catch{return'en'}})();
  const[draft,setDraft]=useState(query),[data,setData]=useState(null),[error,setError]=useState(false),[retry,setRetry]=useState(0),[related,setRelated]=useState(true),[surah,setSurah]=useState(0),[limit,setLimit]=useState(20);
