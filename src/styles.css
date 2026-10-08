@@ -30,3 +30,8 @@
 .lang-ta .surah-menu-context,.lang-ta .surah-menu-popover small{line-height:1.7}
 @media(max-width:1000px){.lang-ta .hero{min-height:auto}.lang-ta .hero h1{font-size:clamp(40px,7vw,64px)}}
 @media(max-width:600px){.lang-ta .hero h1{font-size:40px;line-height:1.2}.lang-ta .hero-copy>p{font-size:16px;line-height:1.9}.lang-ta .home-start-grid p{min-height:auto}}
+
+/* Hero title language variants */
+.hero-title-ta{display:none}
+.lang-ta .hero-title-en{display:none}
+.lang-ta .hero-title-ta{display:block}
