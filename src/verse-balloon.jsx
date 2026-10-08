@@ -8,10 +8,10 @@ export function loadVerseChapter(surah,language='en'){
  if(!chapterCache.has(cacheKey))chapterCache.set(cacheKey,fetch(`/api/theme-verses/${surah}?lang=${language}`).then(r=>{if(!r.ok)throw new Error('Verse source unavailable');return r.json()}).then(d=>{if(!d.verses?.length||!d.source?.version)throw new Error('Incomplete verse response');return d}).catch(e=>{chapterCache.delete(cacheKey);throw e}));
  return chapterCache.get(cacheKey);
 }
-export function VerseReference({surah,verses,children,language='en'}){
- const[language,setLanguage]=useState(language);
+export function VerseReference({surah,verses,children,language:initialLanguage='en'}){
+ const[language,setLanguage]=useState(initialLanguage);
  const label=language==='ta'?'Tamil':'English';
- useEffect(()=>setLanguage(language),[language]);
+ useEffect(()=>setLanguage(initialLanguage),[initialLanguage]);
  const[open,setOpen]=useState(false),[data,setData]=useState(null),[error,setError]=useState(false),[position,setPosition]=useState({top:80,left:16,width:540,height:500});
  const anchor=useRef(null),panel=useRef(null),timer=useRef(null),id=useId();
  const s=surahs.find(s=>s.number===surah),[start,end=start]=verses.split('-').map(Number);
