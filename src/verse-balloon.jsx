@@ -2,10 +2,11 @@ import React,{useEffect,useId,useRef,useState}from'react';
 import{createPortal}from'react-dom';
 import{surahs}from'./data';
 import'./verse-balloon.css';
+const runtimeBase=(import.meta.env.VITE_APP_BASE_URL||'').replace(/\/$/,'');
 const chapterCache=new Map();
 export function loadVerseChapter(surah,language='en'){
  const cacheKey=`${surah}:${language}`;
- if(!chapterCache.has(cacheKey))chapterCache.set(cacheKey,fetch(`/api/theme-verses/${surah}?lang=${language}`).then(r=>{if(!r.ok)throw new Error('Verse source unavailable');return r.json()}).then(d=>{if(!d.verses?.length||!d.source?.version)throw new Error('Incomplete verse response');return d}).catch(e=>{chapterCache.delete(cacheKey);throw e}));
+ if(!chapterCache.has(cacheKey))chapterCache.set(cacheKey,fetch(`${runtimeBase}/api/theme-verses/${surah}?lang=${language}`).then(r=>{if(!r.ok)throw new Error('Verse source unavailable');return r.json()}).then(d=>{if(!d.verses?.length||!d.source?.version)throw new Error('Incomplete verse response');return d}).catch(e=>{chapterCache.delete(cacheKey);throw e}));
  return chapterCache.get(cacheKey);
 }
 export function VerseReference({surah,verses,children,language:initialLanguage='en'}){
