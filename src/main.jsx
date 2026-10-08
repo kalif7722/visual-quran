@@ -12,7 +12,8 @@ import'./glossy-theme.css';
 import'./polish.css';
 import'./aurora-theme.css';
 
-const assetBase=(import.meta.env.VITE_ASSET_BASE_URL||'/media').replace(/\/$/,'');
+const runtimeBase=(import.meta.env.VITE_APP_BASE_URL||'').replace(/\/$/,'');
+const assetBase=(import.meta.env.VITE_ASSET_BASE_URL||`${runtimeBase}/media`).replace(/\/$/,'');
 const assetUrl=(s,n,lang='en')=>`${assetBase}/surahs/${s.id}-${s.slug}/${lang}/${s.id}-${s.slug}-${String(n).padStart(2,'0')}.webp`;
 const LanguageContext=createContext({language:'en',changeLanguage:()=>{}});
 function LanguageProvider({children}){
@@ -125,7 +126,7 @@ function SurahViewer(){
  const[slideCount,setSlideCount]=useState(defaultCount),[index,setIndex]=useState(1),[failed,setFailed]=useState(false),[fullscreen,setFullscreen]=useState(false),[collapsed,setCollapsed]=useState(false),[swipeDirection,setSwipeDirection]=useState(null);
  const touchStartRef=useRef(null);
  useEffect(()=>{let active=true;setIndex(1);setFailed(false);setFullscreen(false);setLoading(true);setLoadError(false);setSlideFiles([]);setSlideCount(0);
- fetch(`/api/surah-slides/${s.id}/${s.slug}/${language}`,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{if(active){setSlideFiles(d.files);setSlideCount(d.files.length)}}).catch(()=>{if(active)setLoadError(true)}).finally(()=>{if(active)setLoading(false)});
+ fetch(`${runtimeBase}/api/surah-slides/${s.id}/${s.slug}/${language}`,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{if(active){setSlideFiles(d.files);setSlideCount(d.files.length)}}).catch(()=>{if(active)setLoadError(true)}).finally(()=>{if(active)setLoading(false)});
  return()=>{active=false}},[s.id,language,refresh]);
  useEffect(()=>{if(!fullscreen)return;const previous=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=previous}},[fullscreen]);
  useEffect(()=>{if(!fullscreen)return;const onKey=e=>{if(e.key==='Escape')setFullscreen(false);if(e.key==='ArrowLeft')goPrev();if(e.key==='ArrowRight')goNext()};window.addEventListener('keydown',onKey);return()=>window.removeEventListener('keydown',onKey)},[fullscreen,index,slideCount]);
