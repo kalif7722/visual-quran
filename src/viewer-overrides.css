@@ -11,13 +11,17 @@
 .full-slide{width:100%;height:100%;display:grid;place-items:center;will-change:transform}
 .full-slide-up{animation:fullSlideInFromBottom .32s cubic-bezier(.22,.61,.36,1) both}
 .full-slide-down{animation:fullSlideInFromTop .32s cubic-bezier(.22,.61,.36,1) both}
+.full-slide-left{animation:fullSlideInFromRight .32s cubic-bezier(.22,.61,.36,1) both}
+.full-slide-right{animation:fullSlideInFromLeft .32s cubic-bezier(.22,.61,.36,1) both}
 .full-gesture-hint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(3,27,22,.55);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.92);font-size:11px;font-weight:700;white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:7;pointer-events:none;animation:fullGestureHintFade 3.5s ease both}
 .full-gesture-hint span{font-size:16px;color:#f0d38f}
 @keyframes fullSlideInFromBottom{from{transform:translateY(100%);opacity:.96}to{transform:translateY(0);opacity:1}}
 @keyframes fullSlideInFromTop{from{transform:translateY(-100%);opacity:.96}to{transform:translateY(0);opacity:1}}
+@keyframes fullSlideInFromRight{from{transform:translateX(100%);opacity:.96}to{transform:translateX(0);opacity:1}}
+@keyframes fullSlideInFromLeft{from{transform:translateX(-100%);opacity:.96}to{transform:translateX(0);opacity:1}}
 @keyframes fullGestureHintFade{0%,72%{opacity:.92}100%{opacity:0}}
 @media(min-width:761px){.full-gesture-hint{display:none}}
-@media(prefers-reduced-motion:reduce){.full-slide-up,.full-slide-down{animation:none}.full-gesture-hint{animation:none;opacity:.8}}
+@media(prefers-reduced-motion:reduce){.full-slide-up,.full-slide-down,.full-slide-left,.full-slide-right{animation:none}.full-gesture-hint{animation:none;opacity:.8}}
 .full-close{position:absolute!important;z-index:8!important;top:10px!important;right:12px!important;width:34px!important;height:34px!important;border:1px solid rgba(255,255,255,.24)!important;border-radius:50%!important;background:rgba(255,255,255,.86)!important;color:#102d25!important;font-size:20px!important;display:grid!important;place-items:center!important;box-shadow:0 6px 16px rgba(0,0,0,.15)!important}
 
 @media(max-width:1050px){.viewer-layout.viewer-wide{grid-template-columns:118px minmax(0,1fr)}.viewer-layout.viewer-wide.rail-collapsed{grid-template-columns:52px minmax(0,1fr)}.compact-nav{height:calc(100vh - 195px);max-height:calc(100vh - 195px)}.compact-nav button{grid-template-columns:28px 1fr}.compact-nav button>small{font-size:9px}.stage-dominant .stage{width:min(100%,calc((100vh - 255px) * 16 / 9));max-height:calc(100vh - 255px)}.surah-picker{max-width:155px}}
