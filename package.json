@@ -19,7 +19,8 @@
     "react-dom": "19.3.0",
     "react-router-dom": "7.18.4",
     "wrangler": "4.148.0",
-    "@capacitor/core": "8.5.2"
+    "@capacitor/core": "8.5.2",
+    "@capacitor/browser": "8.5.2"
   },
   "devDependencies": {
     "@capacitor/cli": "8.5.2",
