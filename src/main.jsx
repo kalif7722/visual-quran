@@ -62,7 +62,7 @@ function Home(){
   <section className="hero">
    <div className="hero-copy">
     <span className="eyebrow">{ta?'குர்ஆன் முழுவதும் ஒரு காட்சிப் பயணம்':'A VISUAL JOURNEY THROUGH THE QURAN'}</span>
-    <h1>{ta?<>ஒவ்வொரு சூராவையும்<br/><em>அர்த்தமுள்ள காட்சிகளால்</em><br/>ஆராயுங்கள்.</>:<>Explore every Surah<br/><em>through meaningful visuals.</>}</h1>
+    <h1>{ta&&<>ஒவ்வொரு சூராவையும்<br/><em>அர்த்தமுள்ள காட்சிகளால்</em><br/>ஆராயுங்கள்.</>}{!ta&&<>Explore every Surah<br/><em>through meaningful visuals.</>}</h1>
     <p>{ta?'வாசிப்பிலிருந்து புரிதலுக்குச் செல்லுங்கள். ஒவ்வொரு சூராவும் புரிந்துகொள்ளவும், சிந்திக்கவும், நினைவில் கொள்ளவும் உதவும் எளிமையான காட்சிப் பயணமாக மாறுகிறது.':'Move from reading to seeing: each Surah becomes an approachable visual story designed to help you understand, reflect and remember.'}</p>
     <div className="hero-actions">
      <button className="primary" onClick={()=>nav('/surah/001/al-fatihah')}>{ta?'Al-Fatihah மூலம் தொடங்குங்கள்':'Start with Al-Fatihah'}</button>
