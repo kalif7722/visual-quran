@@ -56,3 +56,41 @@ footer{background:linear-gradient(110deg,#edf5fb,#edf1ff);border-color:#fff;colo
 .about-contact-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:26px}.about-visual-quran,.contact-visual-quran{padding:36px;border-radius:26px;border:1px solid #fff;box-shadow:0 7px 0 #cbd8e280,0 20px 40px #24416312;background:linear-gradient(145deg,#fff,#dbf3f7)}.contact-visual-quran{background:linear-gradient(145deg,#fff,#e4e9ff);scroll-margin-top:100px}.about-contact-grid h2{font-size:32px;line-height:1.3}.about-contact-grid p{color:#526780;line-height:1.8}.about-values{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.about-values span{font-size:11px;background:#ffffffb0;padding:9px 12px;border:1px solid #c4dfea;border-radius:30px;color:#315b81}.contact-email{display:inline-flex;align-items:center;gap:12px;max-width:100%;padding:15px 18px;margin:15px 0;border-radius:15px;color:#254d89;background:linear-gradient(145deg,#fff,#e8efff);border:1px solid #b8cfed;box-shadow:0 4px 0 #c3d5ed;font-weight:700;font-size:clamp(13px,1.5vw,17px)}.contact-email>span:last-child{overflow-wrap:anywhere;min-width:0}.contact-email>span:first-child{font-size:24px}.contact-email:hover{border-color:#608de0}.contact-help{font-size:13px}.contact-cta{display:inline-block;margin-top:10px;padding:13px 22px;background:linear-gradient(135deg,#285ba9,#575ac3);color:#fff;border-radius:13px;box-shadow:0 5px 0 #283e83,inset 0 1px 0 #ffffff35}.contact-cta:hover{background:linear-gradient(135deg,#245bbd,#5555b8)}footer .footer-links{flex-wrap:wrap;align-items:center;gap:20px}footer .footer-links a{color:#315b81}footer .footer-links a:hover{text-decoration:underline}
 @media(max-width:1100px) and (min-width:761px){.topbar{gap:12px}.topnav{gap:15px}.topbar .surah-menu-trigger{min-width:185px}.topbar .brand{min-width:145px;width:145px}.topbar .lang{max-width:100px}}
 @media(max-width:760px){.about-contact-grid{grid-template-columns:1fr}.about-visual-quran,.contact-visual-quran{padding:25px}.about-contact-grid h2{font-size:29px}footer .footer-links{flex-direction:row;gap:18px}.contact-email{font-size:14px;padding:13px 12px}}
+
+
+/* Adaptive Android layout: preserve the slide ratio on tablets without changing phone styling. */
+@media (min-width:761px) and (max-width:1200px){
+  .viewer-layout.viewer-wide{grid-template-columns:clamp(104px,13vw,158px) minmax(0,1fr);min-height:calc(100dvh - 190px);gap:0}
+  .viewer-layout.viewer-wide.rail-collapsed{grid-template-columns:52px minmax(0,1fr)}
+  .viewer-layout.viewer-wide .compact-nav{height:calc(100dvh - 190px);max-height:calc(100dvh - 190px);padding:8px 6px}
+  .viewer-layout.viewer-wide .compact-nav button{grid-template-columns:26px minmax(0,1fr);gap:4px;padding:9px 5px}
+  .viewer-layout.viewer-wide .compact-nav button>span{font-size:10px}
+  .viewer-layout.viewer-wide .compact-nav button>small{font-size:9px}
+  .viewer-layout.viewer-wide .stage-dominant{padding:clamp(10px,1.8vw,20px);min-width:0}
+  .viewer-layout.viewer-wide .stage-dominant .stage{width:min(100%,calc((100dvh - 245px)*16/9));max-height:calc(100dvh - 245px);aspect-ratio:16/9;height:auto;min-height:0}
+  .viewer-layout.viewer-wide .stage-dominant .stage img{width:100%;height:100%;object-fit:contain!important}
+  .viewer-layout.viewer-wide .stage-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .viewer-layout.viewer-wide .stage-controls button{min-width:0;padding:10px 12px}
+  .refined-viewer-head{grid-template-columns:minmax(90px,130px) minmax(180px,1fr) auto!important;gap:12px;padding:20px 22px!important}
+  .viewer-identity h1{font-size:clamp(28px,3vw,38px)!important}
+  .viewer-tools{gap:7px}
+  .next-surah-link{min-width:0;padding:8px 10px}
+  .next-surah-link strong{font-size:11px}
+}
+@media (min-width:761px) and (max-width:950px){
+  .refined-viewer-head{grid-template-columns:minmax(0,1fr) auto!important}
+  .viewer-breadcrumb{grid-column:1/-1}
+  .viewer-identity{grid-column:1}
+  .viewer-tools{grid-column:2;grid-row:2}
+  .viewer-tools .next-surah-link{display:none}
+  .topnav{gap:10px;font-size:12px}
+  .topbar .brand{width:130px;min-width:130px}
+  .topbar .lang{max-width:90px}
+}
+@media (orientation:landscape) and (max-height:560px){
+  .viewer-layout.viewer-wide{min-height:calc(100dvh - 140px)}
+  .viewer-layout.viewer-wide .compact-nav{height:calc(100dvh - 140px);max-height:calc(100dvh - 140px)}
+  .viewer-layout.viewer-wide .stage-dominant .stage{width:min(100%,calc((100dvh - 175px)*16/9));max-height:calc(100dvh - 175px)}
+  .full-viewer .full-stage,.full-viewer .full-slide{width:100%!important;height:100%!important}
+  .full-viewer .full-slide>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important}
+}
