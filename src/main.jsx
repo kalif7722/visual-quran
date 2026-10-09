@@ -130,7 +130,7 @@ function SurahViewer(){
  return()=>{active=false}},[s.id,language,refresh]);
  useEffect(()=>{if(!fullscreen)return;const previous=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=previous}},[fullscreen]);
  useEffect(()=>{if(!fullscreen)return;const onKey=e=>{if(e.key==='Escape')setFullscreen(false);if(e.key==='ArrowLeft')goPrev();if(e.key==='ArrowRight')goNext()};window.addEventListener('keydown',onKey);return()=>window.removeEventListener('keydown',onKey)},[fullscreen,index,slideCount]);
- const img=slideFiles[index-1]?`${assetBase}/surahs/${s.id}-${s.slug}/${language}/${slideFiles[index-1].filename}`:assetUrl(s,index,language);
+ const img=slideFiles[index-1]?`${assetBase}/surahs/${s.id}-${s.slug}/${language}/${slideFiles[index-1].filename}?v=${encodeURIComponent(slideFiles[index-1].version||slideFiles[index-1].filename)}`:assetUrl(s,index,language);
  const openFullscreen=()=>{setSwipeDirection(null);setFullscreen(true)};
  const goPrev=()=>{if(index<=1)return;setSwipeDirection('down');setIndex(i=>Math.max(1,i-1));setFailed(false)};
  const goNext=()=>{if(index>=slideCount)return;setSwipeDirection('up');setIndex(i=>Math.min(slideCount,i+1));setFailed(false)};
