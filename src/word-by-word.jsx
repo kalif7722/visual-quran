@@ -12,6 +12,8 @@ async function fetchSentenceTranslations(chapter,language,signal){
   const response=await fetch(`https://visual-quran.kalifs.workers.dev/api/theme-verses/${chapter}?lang=${language}`,{signal,cache:'no-store'});
   if(!response.ok)throw Error('Sentence translations are temporarily unavailable.');
   const payload=await response.json();
+  const expectedSource=language==='ta'?'tamil_baqavi':'english_rwwad';
+  if(payload.source?.key!==expectedSource)throw Error(`Expected ${expectedSource} sentence translations, received ${payload.source?.key||'unknown source'}.`);
   if(!Array.isArray(payload.verses))throw Error('Sentence translations response was not recognized.');
   return Object.fromEntries(payload.verses.map(item=>[Number(item.verse),cleanSentenceTranslation(item.translation)]));
 }
