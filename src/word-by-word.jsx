@@ -50,6 +50,8 @@ export function WordByWord(){
     fetchChapter(Number(chapter),language,controller.signal).then(data=>{setVerses(data);setLoading(false)}).catch(err=>{if(!controller.signal.aborted){setError(err.message||'Unable to load word-by-word data.');setLoading(false)}});
     return()=>controller.abort();
   },[chapter,language,retry]);
+  const returnedGlossLanguage=verses.flatMap(verse=>verse.words||[]).find(word=>word.translation?.language_name)?.translation?.language_name||'';
+  const tamilGlossUnavailable=isTamil&&returnedGlossLanguage&&!/tamil|தமிழ்/i.test(returnedGlossLanguage);
   const totalPages=Math.max(1,Math.ceil(verses.length/PAGE_SIZE));
   const visibleVerses=verses.slice(page*PAGE_SIZE,(page+1)*PAGE_SIZE);
   const selectedWord=selected?.word||null;
@@ -72,6 +74,7 @@ export function WordByWord(){
       <div className="word-study-main">
         <div className="word-chapter-head"><div><span className="word-chapter-kicker">SURAH {current.number} · {current.ayahs} VERSES</span><h2>{current.name}</h2><p>{current.meaning}</p></div><label className="word-language-picker"><span>{text.language}</span><select value={language} onChange={e=>setLanguage(e.target.value)}><option value="en">{text.english}</option><option value="ta">{text.tamil}</option></select></label></div>
         <div className="word-study-tip"><span>✧</span><p>{text.hint}</p></div>
+        {!loading&&!error&&tamilGlossUnavailable&&<div className="word-language-notice">Tamil word-level meanings are not available in the returned dataset for this Surah, so the glosses below remain in {returnedGlossLanguage}. The interface is in Tamil; we will not fabricate word meanings.</div>}
         {loading&&<div className="word-state"><span className="word-spinner"/><strong>{text.loading}</strong></div>}
         {!loading&&error&&<div className="word-state word-state-error"><span>⌁</span><strong>{text.empty}</strong><button onClick={()=>setRetry(v=>v+1)}>{text.retry}</button></div>}
         {!loading&&!error&&<><div className="word-verse-list">{visibleVerses.map(verse=><article className="word-verse-card" key={verse.verse_key}><div className="word-verse-heading"><span>{text.verse} {verse.verse_number}</span><small>{verse.verse_key}</small></div><div className="word-arabic-line" dir="rtl">{(verse.words||[]).filter(word=>word.char_type_name==='word').map((word,index)=><button key={word.id||`${verse.verse_key}-${index}`} className={`word-token tone-${palette[index%palette.length]} ${selected?.verse.verse_key===verse.verse_key&&selected?.index===index?'active':''}`} onClick={()=>setSelected({verse,index,word})} aria-pressed={selected?.verse.verse_key===verse.verse_key&&selected?.index===index}><span className="word-token-arabic">{word.text_uthmani||word.text_imlaei||''}</span><span className="word-token-gloss" dir="auto">{stripHtml(word.translation?.text)||'—'}</span></button>)}</div><div className="word-verse-footer"><span>۞</span>{verse.verse_key}</div></article>)}</div><div className="word-pagination"><button disabled={page===0} onClick={()=>{setPage(p=>p-1);setSelected(null)}}>← {text.prev}</button><span>{page+1} / {totalPages}</span><button disabled={page>=totalPages-1} onClick={()=>{setPage(p=>p+1);setSelected(null)}}>{text.next} →</button></div></>}
