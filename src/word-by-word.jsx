@@ -7,6 +7,14 @@ const PAGE_SIZE=12;
 const palette=['mint','sky','gold','violet','teal','blue'];
 const stripHtml=value=>String(value||'').replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
 
+async function fetchSentenceTranslations(chapter,language,signal){
+  const response=await fetch(`https://visual-quran.kalifs.workers.dev/api/theme-verses/${chapter}?lang=${language}`,{signal,cache:'no-store'});
+  if(!response.ok)throw Error('Sentence translations are temporarily unavailable.');
+  const payload=await response.json();
+  if(!Array.isArray(payload.verses))throw Error('Sentence translations response was not recognized.');
+  return Object.fromEntries(payload.verses.map(item=>[Number(item.verse),stripHtml(item.translation)]));
+}
+
 async function fetchChapter(chapter,language,signal){
   const verses=[];
   let page=1,totalPages=1;
@@ -35,6 +43,8 @@ export function WordByWord(){
   const[chapter,setChapter]=useState('001');
   const[language,setLanguage]=useState('en');
   const[verses,setVerses]=useState([]);
+  const[sentenceTranslations,setSentenceTranslations]=useState({});
+  const[sentenceTranslationError,setSentenceTranslationError]=useState(false);
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState('');
   const[retry,setRetry]=useState(0);
@@ -46,8 +56,9 @@ export function WordByWord(){
   const filteredSurahs=useMemo(()=>surahs.filter(s=>`${s.number} ${s.name} ${s.meaning}`.toLowerCase().includes(surahQuery.toLowerCase())),[surahQuery]);
   useEffect(()=>{
     const controller=new AbortController();
-    setLoading(true);setError('');setVerses([]);setPage(0);setSelected(null);
+    setLoading(true);setError('');setVerses([]);setSentenceTranslations({});setSentenceTranslationError(false);setPage(0);setSelected(null);
     fetchChapter(Number(chapter),language,controller.signal).then(data=>{setVerses(data);setLoading(false)}).catch(err=>{if(!controller.signal.aborted){setError(err.message||'Unable to load word-by-word data.');setLoading(false)}});
+    fetchSentenceTranslations(Number(chapter),language,controller.signal).then(setSentenceTranslations).catch(()=>{if(!controller.signal.aborted)setSentenceTranslationError(true)});
     return()=>controller.abort();
   },[chapter,language,retry]);
   const returnedGlossLanguage=verses.flatMap(verse=>verse.words||[]).find(word=>word.translation?.language_name)?.translation?.language_name||'';
@@ -58,10 +69,10 @@ export function WordByWord(){
   const goChapter=next=>{const n=Math.max(1,Math.min(114,Number(chapter)+next));setChapter(String(n).padStart(3,'0'));setSurahQuery('')};
   const text=isTamil?{
     eyebrow:'சொல்-சொல்லாக குர்ஆன்',title:'ஒவ்வொரு சொல்லையும்',titleAccent:'புரிந்துகொள்ளுங்கள்',intro:'அரபுச் சொல்லைத் தேர்ந்தெடுத்து அதன் பொருள், உச்சரிப்பு மற்றும் வசனச் சூழலைக் கற்றுக்கொள்ளுங்கள்.',
-    choose:'சூராவைத் தேர்ந்தெடுக்கவும்',search:'சூராவைத் தேடுங்கள்…',words:'சொற்கள்',verse:'வசனம்',meaning:'பொருள்',pronunciation:'உச்சரிப்பு',context:'வசனத்தின் முழு உரை',prev:'முந்தைய',next:'அடுத்து',loading:'சொற்களின் தரவு ஏற்றப்படுகிறது…',retry:'மீண்டும் முயற்சி',empty:'சொல் தரவை ஏற்ற முடியவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.',tip:'ஒரு சொல்லைத் தேர்ந்தெடுக்கவும்',hint:'ஒவ்வொரு சொல்லும் தனித்த நிறத்தில் காட்டப்பட்டுள்ளது. சொல்லைத் தொடவும் அல்லது கிளிக் செய்யவும்.',source:'சொல்-சொல் மொழிபெயர்ப்பு Quran.com தரவிலிருந்து பெறப்படுகிறது.',language:'விளக்க மொழி',english:'English',tamil:'தமிழ்'
+    choose:'சூராவைத் தேர்ந்தெடுக்கவும்',search:'சூராவைத் தேடுங்கள்…',words:'சொற்கள்',verse:'வசனம்',meaning:'பொருள்',pronunciation:'உச்சரிப்பு',context:'வசனத்தின் முழு உரை',sentenceTranslation:'முழு வசனத்தின் மொழிபெயர்ப்பு',prev:'முந்தைய',next:'அடுத்து',loading:'சொற்களின் தரவு ஏற்றப்படுகிறது…',retry:'மீண்டும் முயற்சி',empty:'சொல் தரவை ஏற்ற முடியவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.',tip:'ஒரு சொல்லைத் தேர்ந்தெடுக்கவும்',hint:'ஒவ்வொரு சொல்லும் தனித்த நிறத்தில் காட்டப்பட்டுள்ளது. சொல்லைத் தொடவும் அல்லது கிளிக் செய்யவும்.',source:'சொல்-சொல் மொழிபெயர்ப்பு Quran.com தரவிலிருந்து பெறப்படுகிறது.',language:'விளக்க மொழி',english:'English',tamil:'தமிழ்'
   }:{
     eyebrow:'WORD-BY-WORD QURAN',title:'Understand every',titleAccent:'word by word',intro:'Select an Arabic word to explore its meaning, transliteration and place within the verse.',
-    choose:'Choose a Surah',search:'Search Surahs…',words:'WORDS',verse:'VERSE',meaning:'Meaning',pronunciation:'Pronunciation',context:'Verse context',prev:'Previous',next:'Next',loading:'Loading word-by-word data…',retry:'Try again',empty:'Word data could not be loaded. Check your connection and try again.',tip:'Select a word',hint:'Each word has a matching color. Tap or click a word to study it.',source:'Word-level glosses are provided by Quran.com data.',language:'Gloss language',english:'English',tamil:'தமிழ்'
+    choose:'Choose a Surah',search:'Search Surahs…',words:'WORDS',verse:'VERSE',meaning:'Meaning',pronunciation:'Pronunciation',context:'Verse context',sentenceTranslation:'Full verse translation',prev:'Previous',next:'Next',loading:'Loading word-by-word data…',retry:'Try again',empty:'Word data could not be loaded. Check your connection and try again.',tip:'Select a word',hint:'Each word has a matching color. Tap or click a word to study it.',source:'Word-level glosses are provided by Quran.com data.',language:'Gloss language',english:'English',tamil:'தமிழ்'
   };
   return <section className={`word-study ${isTamil?'word-study-ta':''}`}>
     <div className="word-study-hero">
@@ -77,7 +88,7 @@ export function WordByWord(){
         {!loading&&!error&&tamilGlossUnavailable&&<div className="word-language-notice">Tamil word-level meanings are not available in the returned dataset for this Surah, so the glosses below remain in {returnedGlossLanguage}. The interface is in Tamil; we will not fabricate word meanings.</div>}
         {loading&&<div className="word-state"><span className="word-spinner"/><strong>{text.loading}</strong></div>}
         {!loading&&error&&<div className="word-state word-state-error"><span>⌁</span><strong>{text.empty}</strong><button onClick={()=>setRetry(v=>v+1)}>{text.retry}</button></div>}
-        {!loading&&!error&&<><div className="word-verse-list">{visibleVerses.map(verse=><article className="word-verse-card" key={verse.verse_key}><div className="word-verse-heading"><span>{text.verse} {verse.verse_number}</span><small>{verse.verse_key}</small></div><div className="word-arabic-line" dir="rtl">{(verse.words||[]).filter(word=>word.char_type_name==='word').map((word,index)=><button key={word.id||`${verse.verse_key}-${index}`} className={`word-token tone-${palette[index%palette.length]} ${selected?.verse.verse_key===verse.verse_key&&selected?.index===index?'active':''}`} onClick={()=>setSelected({verse,index,word})} aria-pressed={selected?.verse.verse_key===verse.verse_key&&selected?.index===index}><span className="word-token-arabic">{word.text_uthmani||word.text_imlaei||''}</span><span className="word-token-gloss" dir="auto">{stripHtml(word.translation?.text)||'—'}</span></button>)}</div><div className="word-verse-footer"><span>۞</span>{verse.verse_key}</div></article>)}</div><div className="word-pagination"><button disabled={page===0} onClick={()=>{setPage(p=>p-1);setSelected(null)}}>← {text.prev}</button><span>{page+1} / {totalPages}</span><button disabled={page>=totalPages-1} onClick={()=>{setPage(p=>p+1);setSelected(null)}}>{text.next} →</button></div></>}
+        {!loading&&!error&&<><div className="word-verse-list">{visibleVerses.map(verse=><article className="word-verse-card" key={verse.verse_key}><div className="word-verse-heading"><span>{text.verse} {verse.verse_number}</span><small>{verse.verse_key}</small></div><div className="word-arabic-line" dir="rtl">{(verse.words||[]).filter(word=>word.char_type_name==='word').map((word,index)=><button key={word.id||`${verse.verse_key}-${index}`} className={`word-token tone-${palette[index%palette.length]} ${selected?.verse.verse_key===verse.verse_key&&selected?.index===index?'active':''}`} onClick={()=>setSelected({verse,index,word})} aria-pressed={selected?.verse.verse_key===verse.verse_key&&selected?.index===index}><span className="word-token-arabic">{word.text_uthmani||word.text_imlaei||''}</span><span className="word-token-gloss" dir="auto">{stripHtml(word.translation?.text)||'—'}</span></button>)}</div><div className="word-sentence-translation"><span>{text.sentenceTranslation}</span><p>{sentenceTranslations[verse.verse_number]|| (sentenceTranslationError ? (isTamil?'மொழிபெயர்ப்பை ஏற்ற முடியவில்லை.':'Translation temporarily unavailable.') : (isTamil?'மொழிபெயர்ப்பு ஏற்றப்படுகிறது…':'Loading translation…'))}</p></div><div className="word-verse-footer"><span>۞</span>{verse.verse_key}</div></article>)}</div><div className="word-pagination"><button disabled={page===0} onClick={()=>{setPage(p=>p-1);setSelected(null)}}>← {text.prev}</button><span>{page+1} / {totalPages}</span><button disabled={page>=totalPages-1} onClick={()=>{setPage(p=>p+1);setSelected(null)}}>{text.next} →</button></div></>}
         <aside className="word-detail-panel">{selectedWord?<><div className="word-detail-label"><span>✦</span>{text.meaning} · {selected.verse.verse_key}</div><div className="word-detail-grid"><div className={`word-detail-arabic tone-${palette[selected.index%palette.length]}`} dir="rtl">{selectedWord.text_uthmani||selectedWord.text_imlaei}</div><div className="word-detail-copy"><span>{text.meaning}</span><h3>{stripHtml(selectedWord.translation?.text)||'—'}</h3><span>{text.pronunciation}</span><p>{stripHtml(selectedWord.transliteration?.text)||'—'}</p></div></div><div className="word-detail-context"><span>{text.context}</span><p dir="rtl">{selected.verse.text_uthmani||selected.verse.words?.map(w=>w.text_uthmani).filter(Boolean).join(' ')}</p></div></>:<div className="word-detail-empty"><span>✧</span><div><strong>{text.tip}</strong><p>{text.hint}</p></div></div>}</aside>
         <p className="word-source-note">{text.source} <a href="https://quran.com" target="_blank" rel="noreferrer">Quran.com ↗</a></p>
       </div>
