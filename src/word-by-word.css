@@ -17,8 +17,8 @@
 
 .word-language-notice{margin:0 0 14px;padding:12px 14px;border:1px solid #f0d99b;border-radius:12px;background:#fff8df;color:#765d26;font-size:12px;line-height:1.6}
 
-.word-sentence-translation{margin:0 0 12px;padding:12px 13px 13px;border:1px solid #dbe9e3;border-radius:13px;background:linear-gradient(135deg,#f7fcf8,#f5f7ff);direction:rtl;text-align:right}
+.word-sentence-translation{margin:0 0 12px;padding:12px 13px 13px;border:1px solid #dbe9e3;border-radius:13px;background:linear-gradient(135deg,#f7fcf8,#f5f7ff);direction:ltr;text-align:left}
 .word-sentence-translation>span{display:block;margin-bottom:6px;color:#4b8976;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
-.word-sentence-translation p{margin:0;color:#243f36;font-size:14px;font-weight:700;line-height:1.9;overflow-wrap:anywhere;text-align:right;direction:rtl}
+.word-sentence-translation p{margin:0;color:#243f36;font-size:14px;font-weight:700;line-height:1.9;overflow-wrap:anywhere;text-align:justify;text-justify:inter-word;direction:ltr}
 .word-study-ta .word-sentence-translation>span{letter-spacing:0;font-size:11px}
 .word-study-ta .word-sentence-translation p{font-family:'Noto Sans Tamil','DM Sans',sans-serif;line-height:2;font-size:14px}
