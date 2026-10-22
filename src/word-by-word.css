@@ -64,3 +64,8 @@
 }
 .word-token[data-transliteration=""]::after{display:none}
 @media(prefers-reduced-motion:reduce){.word-token::after{transition:none}}
+
+
+/* Show verse cards in Quran reading order: first verse starts at the right. */
+.word-verse-list{direction:rtl}
+.word-verse-card{direction:ltr}
