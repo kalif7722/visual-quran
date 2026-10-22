@@ -1,5 +1,5 @@
 import React,{useEffect,useMemo,useState}from'react';
-import{Link}from'react-router-dom';
+import{Link,useLocation,useNavigate}from'react-router-dom';
 import{surahs}from'./data';
 import'./word-by-word.css';
 
@@ -43,8 +43,13 @@ async function fetchChapter(chapter,language,signal){
 }
 
 export function WordByWord(){
-  const[chapter,setChapter]=useState('001');
-  const[language,setLanguage]=useState('en');
+  const location=useLocation(),navigate=useNavigate();
+  const routeParams=new URLSearchParams(location.search);
+  const initialSurah=routeParams.get('surah');
+  const normalizedInitialSurah=initialSurah?String(Number(initialSurah)).padStart(3,'0'):'001';
+  const validInitialSurah=surahs.some(item=>item.id===normalizedInitialSurah)?normalizedInitialSurah:'001';
+  const[chapter,setChapter]=useState(validInitialSurah);
+  const[language,setLanguage]=useState(routeParams.get('lang')==='ta'?'ta':'en');
   const[verses,setVerses]=useState([]);
   const[sentenceTranslations,setSentenceTranslations]=useState({});
   const[sentenceTranslationError,setSentenceTranslationError]=useState(false);
@@ -58,6 +63,33 @@ export function WordByWord(){
   const isTamil=language==='ta';
   const filteredSurahs=useMemo(()=>surahs.filter(s=>`${s.number} ${s.name} ${s.meaning}`.toLowerCase().includes(surahQuery.toLowerCase())),[surahQuery]);
   useEffect(()=>{
+    const params=new URLSearchParams(location.search);
+    const requestedSurah=params.get('surah');
+    if(requestedSurah){
+      const normalized=String(Number(requestedSurah)).padStart(3,'0');
+      if(surahs.some(item=>item.id===normalized))setChapter(normalized);
+    }
+    const requestedLanguage=params.get('lang');
+    if(requestedLanguage==='en'||requestedLanguage==='ta')setLanguage(requestedLanguage);
+  },[location.search]);
+  const updateWordRoute=(nextChapter=chapter,nextLanguage=language)=>{
+    const params=new URLSearchParams(location.search);
+    params.set('surah',String(Number(nextChapter)));
+    params.set('lang',nextLanguage);
+    navigate({pathname:location.pathname,search:params.toString(),hash:location.hash},{replace:true});
+  };
+  const selectChapter=nextChapter=>{
+    const normalized=String(Number(nextChapter)).padStart(3,'0');
+    if(!surahs.some(item=>item.id===normalized))return;
+    setChapter(normalized);setSurahQuery('');
+    updateWordRoute(normalized,language);
+  };
+  const selectLanguage=nextLanguage=>{
+    if(nextLanguage!=='en'&&nextLanguage!=='ta')return;
+    setLanguage(nextLanguage);
+    updateWordRoute(chapter,nextLanguage);
+  };
+  useEffect(()=>{
     const controller=new AbortController();
     setLoading(true);setError('');setVerses([]);setSentenceTranslations({});setSentenceTranslationError(false);setPage(0);setSelected(null);
     fetchChapter(Number(chapter),language,controller.signal).then(data=>{setVerses(data);setLoading(false)}).catch(err=>{if(!controller.signal.aborted){setError(err.message||'Unable to load word-by-word data.');setLoading(false)}});
@@ -69,7 +101,7 @@ export function WordByWord(){
   const totalPages=Math.max(1,Math.ceil(verses.length/PAGE_SIZE));
   const visibleVerses=verses.slice(page*PAGE_SIZE,(page+1)*PAGE_SIZE);
   const selectedWord=selected?.word||null;
-  const goChapter=next=>{const n=Math.max(1,Math.min(114,Number(chapter)+next));setChapter(String(n).padStart(3,'0'));setSurahQuery('')};
+  const goChapter=next=>{const n=Math.max(1,Math.min(114,Number(chapter)+next));selectChapter(String(n).padStart(3,'0'))};
   const text=isTamil?{
     eyebrow:'சொல்-சொல்லாக குர்ஆன்',title:'ஒவ்வொரு சொல்லையும்',titleAccent:'புரிந்துகொள்ளுங்கள்',intro:'அரபுச் சொல்லைத் தேர்ந்தெடுத்து அதன் பொருள், உச்சரிப்பு மற்றும் வசனச் சூழலைக் கற்றுக்கொள்ளுங்கள்.',
     choose:'சூராவைத் தேர்ந்தெடுக்கவும்',search:'சூராவைத் தேடுங்கள்…',words:'சொற்கள்',verse:'வசனம்',meaning:'பொருள்',pronunciation:'உச்சரிப்பு',context:'வசனத்தின் முழு உரை',sentenceTranslation:'முழு வசனத்தின் மொழிபெயர்ப்பு',prev:'முந்தைய',next:'அடுத்து',loading:'சொற்களின் தரவு ஏற்றப்படுகிறது…',retry:'மீண்டும் முயற்சி',empty:'சொல் தரவை ஏற்ற முடியவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.',tip:'ஒரு சொல்லைத் தேர்ந்தெடுக்கவும்',hint:'ஒவ்வொரு சொல்லும் தனித்த நிறத்தில் காட்டப்பட்டுள்ளது. சொல்லைத் தொடவும் அல்லது கிளிக் செய்யவும்.',source:'சொல்-சொல் மொழிபெயர்ப்பு Quran.com தரவிலிருந்து பெறப்படுகிறது.',language:'விளக்க மொழி',english:'English',tamil:'தமிழ்'
@@ -84,9 +116,9 @@ export function WordByWord(){
       <div className="word-study-orbit" aria-hidden="true"><div className="orbit-ring orbit-ring-one"/><div className="orbit-ring orbit-ring-two"/><div className="orbit-center"><span>بِسْمِ</span><span>اللَّهِ</span><small>Learn one word at a time</small></div><i className="orbit-dot orbit-dot-one"/><i className="orbit-dot orbit-dot-two"/><i className="orbit-dot orbit-dot-three"/></div>
     </div>
     <div className="word-study-workspace">
-      <aside className="word-study-sidebar"><div className="word-sidebar-heading"><span>{text.choose}</span><b>114</b></div><input className="word-surah-search" value={surahQuery} onChange={e=>setSurahQuery(e.target.value)} placeholder={text.search} aria-label={text.search}/><div className="word-surah-list">{filteredSurahs.map(s=><button key={s.id} className={s.id===chapter?'selected':''} onClick={()=>{setChapter(s.id);setSurahQuery('')}}><span className="word-surah-number">{s.number}</span><span className="word-surah-name"><strong>{s.name}</strong><small>{s.meaning}</small></span><span className="word-surah-ayahs">{s.ayahs}</span></button>)}</div></aside>
+      <aside className="word-study-sidebar"><div className="word-sidebar-heading"><span>{text.choose}</span><b>114</b></div><input className="word-surah-search" value={surahQuery} onChange={e=>setSurahQuery(e.target.value)} placeholder={text.search} aria-label={text.search}/><div className="word-surah-list">{filteredSurahs.map(s=><button key={s.id} className={s.id===chapter?'selected':''} onClick={()=>selectChapter(s.id)}><span className="word-surah-number">{s.number}</span><span className="word-surah-name"><strong>{s.name}</strong><small>{s.meaning}</small></span><span className="word-surah-ayahs">{s.ayahs}</span></button>)}</div></aside>
       <div className="word-study-main">
-        <div className="word-chapter-head"><div><span className="word-chapter-kicker">SURAH {current.number} · {current.ayahs} VERSES</span><h2>{current.name}</h2><p>{current.meaning}</p></div><label className="word-language-picker"><span>{text.language}</span><select value={language} onChange={e=>setLanguage(e.target.value)}><option value="en">{text.english}</option><option value="ta">{text.tamil}</option></select></label></div>
+        <div className="word-chapter-head"><div><span className="word-chapter-kicker">SURAH {current.number} · {current.ayahs} VERSES</span><h2>{current.name}</h2><p>{current.meaning}</p></div><label className="word-language-picker"><span>{text.language}</span><select value={language} onChange={e=>selectLanguage(e.target.value)}><option value="en">{text.english}</option><option value="ta">{text.tamil}</option></select></label></div>
         <div className="word-study-tip"><span>✧</span><p>{text.hint}</p></div>
         {!loading&&!error&&tamilGlossUnavailable&&<div className="word-language-notice">Tamil word-level meanings are not available in the returned dataset for this Surah, so the glosses below remain in {returnedGlossLanguage}. The interface is in Tamil; we will not fabricate word meanings.</div>}
         {loading&&<div className="word-state"><span className="word-spinner"/><strong>{text.loading}</strong></div>}
