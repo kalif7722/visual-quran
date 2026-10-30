@@ -1,0 +1,171 @@
+{
+  "QL-001": {
+    "reference": "107:1-7",
+    "slides": [
+      2
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-002": {
+    "reference": "49:11",
+    "slides": [
+      7
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-003": {
+    "reference": "49:6",
+    "slides": [
+      4
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-004": {
+    "reference": "49:12",
+    "slides": [
+      8
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-005": {
+    "reference": "3:134",
+    "slides": [
+      120
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-006": {
+    "reference": "5:8",
+    "slides": [
+      11
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-007": {
+    "reference": "16:91",
+    "slides": [
+      64
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-008": {
+    "reference": "83:1-6",
+    "slides": [
+      2,
+      3
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-009": {
+    "reference": "41:34",
+    "slides": [
+      19
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-010": {
+    "reference": "2:271",
+    "slides": [
+      225
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-011": {
+    "reference": "12:4-6",
+    "slides": [
+      4
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-012": {
+    "reference": "12:15-19",
+    "slides": [
+      15
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-013": {
+    "reference": "12:46-49",
+    "slides": [
+      46
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-014": {
+    "reference": "12:89-92",
+    "slides": [
+      88
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-015": {
+    "reference": "28:7-13",
+    "slides": [
+      4
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-016": {
+    "reference": "28:23-26",
+    "slides": [
+      12
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-017": {
+    "reference": "18:13-16",
+    "slides": [
+      8
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-018": {
+    "reference": "18:32-44",
+    "slides": [
+      22
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-019": {
+    "reference": "27:18-19",
+    "slides": [
+      8
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-020": {
+    "reference": "27:20-28",
+    "slides": [
+      10
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-021": {
+    "reference": "14:7",
+    "slides": [
+      6
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  }
+}

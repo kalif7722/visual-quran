@@ -1,6 +1,7 @@
 import React,{useEffect,useMemo,useState}from'react';
 import{Link,useLocation,useNavigate}from'react-router-dom';
 import{surahs}from'./data';
+import{verseTarget}from'./lesson-links.js';
 import'./word-by-word.css';
 
 const PAGE_SIZE=12;
@@ -59,8 +60,12 @@ export function WordByWord(){
   const[page,setPage]=useState(0);
   const[selected,setSelected]=useState(null);
   const[surahQuery,setSurahQuery]=useState('');
+  const[jumpVerse,setJumpVerse]=useState('');
+  const[jumpVersion,setJumpVersion]=useState(0);
   const current=surahs.find(item=>item.id===chapter)||surahs[0];
   const isTamil=language==='ta';
+  const target=verseTarget(location.search,current.ayahs);
+  const targetStart=target?.start,targetEnd=target?.end;
   const filteredSurahs=useMemo(()=>surahs.filter(s=>`${s.number} ${s.name} ${s.meaning}`.toLowerCase().includes(surahQuery.toLowerCase())),[surahQuery]);
   useEffect(()=>{
     const params=new URLSearchParams(location.search);
@@ -76,6 +81,7 @@ export function WordByWord(){
     const params=new URLSearchParams(location.search);
     params.set('surah',String(Number(nextChapter)));
     params.set('lang',nextLanguage);
+    if(nextChapter!==chapter){params.delete('verse');params.delete('endVerse');}
     navigate({pathname:location.pathname,search:params.toString(),hash:location.hash},{replace:true});
   };
   const selectChapter=nextChapter=>{
@@ -96,6 +102,37 @@ export function WordByWord(){
     fetchSentenceTranslations(Number(chapter),language,controller.signal).then(setSentenceTranslations).catch(()=>{if(!controller.signal.aborted)setSentenceTranslationError(true)});
     return()=>controller.abort();
   },[chapter,language,retry]);
+  useEffect(()=>{
+    if(loading||!verses.length||!targetStart)return;
+    const index=verses.findIndex(verse=>verse.verse_number===targetStart&&Number(verse.verse_key.split(':')[0])===Number(chapter));
+    if(index>=0){setPage(Math.floor(index/PAGE_SIZE));setSelected(null);}
+  },[loading,verses,chapter,targetStart,targetEnd,jumpVersion]);
+  useEffect(()=>{
+    if(loading||!targetStart)return;
+    const frame=requestAnimationFrame(()=>{
+      document.getElementById(`verse-${Number(chapter)}-${targetStart}`)?.scrollIntoView({block:'center',behavior:'instant'});
+    });
+    return()=>cancelAnimationFrame(frame);
+  },[loading,verses,page,chapter,targetStart,targetEnd,jumpVersion]);
+  const jumpToVerse=event=>{
+    event.preventDefault();
+    const value=Number(jumpVerse);
+    if(!Number.isInteger(value)||value<1||value>current.ayahs)return;
+    const params=new URLSearchParams(location.search);
+    params.set('surah',String(Number(chapter)));params.set('lang',language);
+    params.set('verse',String(value));params.delete('endVerse');
+    navigate({pathname:location.pathname,search:params.toString(),hash:`verse-${Number(chapter)}-${value}`});
+    setJumpVersion(n=>n+1);
+  };
+  const goPage=nextPage=>{
+    const first=verses[nextPage*PAGE_SIZE];
+    if(!first)return;
+    const params=new URLSearchParams(location.search);
+    params.set('surah',String(Number(chapter)));params.set('lang',language);
+    params.set('verse',String(first.verse_number));params.delete('endVerse');
+    setPage(nextPage);setSelected(null);
+    navigate({pathname:location.pathname,search:params.toString(),hash:`verse-${Number(chapter)}-${first.verse_number}`},{replace:true});
+  };
   const returnedGlossLanguage=verses.flatMap(verse=>verse.words||[]).find(word=>word.translation?.language_name)?.translation?.language_name||'';
   const tamilGlossUnavailable=isTamil&&returnedGlossLanguage&&!/tamil|தமிழ்/i.test(returnedGlossLanguage);
   const totalPages=Math.max(1,Math.ceil(verses.length/PAGE_SIZE));
@@ -119,11 +156,12 @@ export function WordByWord(){
       <aside className="word-study-sidebar"><div className="word-sidebar-heading"><span>{text.choose}</span><b>114</b></div><input className="word-surah-search" value={surahQuery} onChange={e=>setSurahQuery(e.target.value)} placeholder={text.search} aria-label={text.search}/><div className="word-surah-list">{filteredSurahs.map(s=><button key={s.id} className={s.id===chapter?'selected':''} onClick={()=>selectChapter(s.id)}><span className="word-surah-number">{s.number}</span><span className="word-surah-name"><strong>{s.name}</strong><small>{s.meaning}</small></span><span className="word-surah-ayahs">{s.ayahs}</span></button>)}</div></aside>
       <div className="word-study-main">
         <div className="word-chapter-head"><div><span className="word-chapter-kicker">SURAH {current.number} · {current.ayahs} VERSES</span><h2>{current.name}</h2><p>{current.meaning}</p></div><label className="word-language-picker"><span>{text.language}</span><select value={language} onChange={e=>selectLanguage(e.target.value)}><option value="en">{text.english}</option><option value="ta">{text.tamil}</option></select></label></div>
+        <form className="reader-jump" onSubmit={jumpToVerse}><label htmlFor="verse-jump">{isTamil?'வசனத்திற்குச் செல்ல':'Jump to verse'}</label><input id="verse-jump" type="number" min="1" max={current.ayahs} required value={jumpVerse} onChange={e=>setJumpVerse(e.target.value)} placeholder={`1–${current.ayahs}`}/><button type="submit" disabled={loading}>{isTamil?'செல்':'Go'}</button>{target&&<span role="status">{isTamil?'வசனம்':'Verse'} {target.start}{target.end>target.start?`–${target.end}`:''}</span>}</form>
         <div className="word-study-tip"><span>✧</span><p>{text.hint}</p></div>
         {!loading&&!error&&tamilGlossUnavailable&&<div className="word-language-notice">Tamil word-level meanings are not available in the returned dataset for this Surah, so the glosses below remain in {returnedGlossLanguage}. The interface is in Tamil; we will not fabricate word meanings.</div>}
         {loading&&<div className="word-state"><span className="word-spinner"/><strong>{text.loading}</strong></div>}
         {!loading&&error&&<div className="word-state word-state-error"><span>⌁</span><strong>{text.empty}</strong><button onClick={()=>setRetry(v=>v+1)}>{text.retry}</button></div>}
-        {!loading&&!error&&<><div className="word-verse-list">{visibleVerses.map(verse=><article className="word-verse-card" key={verse.verse_key}><div className="word-verse-heading"><span>{text.verse} {verse.verse_number}</span><small>{verse.verse_key}</small></div><div className="word-arabic-line" dir="rtl">{(verse.words||[]).filter(word=>word.char_type_name==='word').map((word,index)=><button key={word.id||`${verse.verse_key}-${index}`} className={`word-token tone-${palette[index%palette.length]} ${selected?.verse.verse_key===verse.verse_key&&selected?.index===index?'active':''}`} data-transliteration={stripHtml(word.transliteration?.text)||''} onClick={()=>setSelected({verse,index,word})} aria-pressed={selected?.verse.verse_key===verse.verse_key&&selected?.index===index}><span className="word-token-arabic">{word.text_uthmani||word.text_imlaei||''}</span><span className="word-token-gloss" dir="auto">{stripHtml(word.translation?.text)||'—'}</span></button>)}</div><div className="word-sentence-translation"><span>{text.sentenceTranslation}</span><p dir="ltr">{sentenceTranslations[verse.verse_number]|| (sentenceTranslationError ? (isTamil?'மொழிபெயர்ப்பை ஏற்ற முடியவில்லை.':'Translation temporarily unavailable.') : (isTamil?'மொழிபெயர்ப்பு ஏற்றப்படுகிறது…':'Loading translation…'))}</p></div><div className="word-verse-footer"><span>۞</span>{verse.verse_key}</div></article>)}</div><div className="word-pagination"><button disabled={page===0} onClick={()=>{setPage(p=>p-1);setSelected(null)}}>← {text.prev}</button><span>{page+1} / {totalPages}</span><button disabled={page>=totalPages-1} onClick={()=>{setPage(p=>p+1);setSelected(null)}}>{text.next} →</button></div></>}
+        {!loading&&!error&&<><div className="word-verse-list">{visibleVerses.map(verse=><article id={`verse-${Number(chapter)}-${verse.verse_number}`} className={`word-verse-card ${targetStart&&verse.verse_number>=targetStart&&verse.verse_number<=targetEnd?'lesson-verse-target':''}`} key={verse.verse_key}><div className="word-verse-heading"><span>{text.verse} {verse.verse_number}</span><small>{verse.verse_key}</small></div><div className="word-arabic-line" dir="rtl">{(verse.words||[]).filter(word=>word.char_type_name==='word').map((word,index)=><button key={word.id||`${verse.verse_key}-${index}`} className={`word-token tone-${palette[index%palette.length]} ${selected?.verse.verse_key===verse.verse_key&&selected?.index===index?'active':''}`} data-transliteration={stripHtml(word.transliteration?.text)||''} onClick={()=>setSelected({verse,index,word})} aria-pressed={selected?.verse.verse_key===verse.verse_key&&selected?.index===index}><span className="word-token-arabic">{word.text_uthmani||word.text_imlaei||''}</span><span className="word-token-gloss" dir="auto">{stripHtml(word.translation?.text)||'—'}</span></button>)}</div><div className="word-sentence-translation"><span>{text.sentenceTranslation}</span><p dir="ltr">{sentenceTranslations[verse.verse_number]|| (sentenceTranslationError ? (isTamil?'மொழிபெயர்ப்பை ஏற்ற முடியவில்லை.':'Translation temporarily unavailable.') : (isTamil?'மொழிபெயர்ப்பு ஏற்றப்படுகிறது…':'Loading translation…'))}</p></div><div className="word-verse-footer"><span>۞</span>{verse.verse_key}</div></article>)}</div><div className="word-pagination"><button disabled={page===0} onClick={()=>goPage(page-1)}>← {text.prev}</button><span>{page+1} / {totalPages}</span><button disabled={page>=totalPages-1} onClick={()=>goPage(page+1)}>{text.next} →</button></div></>}
         <aside className="word-detail-panel">{selectedWord?<><div className="word-detail-label"><span>✦</span>{text.meaning} · {selected.verse.verse_key}</div><div className="word-detail-grid"><div className={`word-detail-arabic tone-${palette[selected.index%palette.length]}`} dir="rtl">{selectedWord.text_uthmani||selectedWord.text_imlaei}</div><div className="word-detail-copy"><span>{text.meaning}</span><h3>{stripHtml(selectedWord.translation?.text)||'—'}</h3><span>{text.pronunciation}</span><p>{stripHtml(selectedWord.transliteration?.text)||'—'}</p></div></div><div className="word-detail-context"><span>{text.context}</span><p dir="rtl">{selected.verse.text_uthmani||selected.verse.words?.map(w=>w.text_uthmani).filter(Boolean).join(' ')}</p></div></>:<div className="word-detail-empty"><span>✧</span><div><strong>{text.tip}</strong><p>{text.hint}</p></div></div>}</aside>
         <p className="word-source-note">{text.source} <a href="https://quran.com" target="_blank" rel="noreferrer">Quran.com ↗</a></p>
       </div>

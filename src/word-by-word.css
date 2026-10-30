@@ -69,3 +69,5 @@
 /* Show verse cards in Quran reading order: first verse starts at the right. */
 .word-verse-list{direction:rtl}
 .word-verse-card{direction:ltr}
+
+.word-verse-card.lesson-verse-target{outline:3px solid #b8872d;outline-offset:3px;scroll-margin-top:110px}

@@ -35,3 +35,5 @@
 .hero-title-ta{display:none}
 .lang-ta .hero-title-en{display:none}
 .lang-ta .hero-title-ta{display:block}
+
+.reader-jump{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:16px 20px;margin:16px 0;border:1px solid #bfd6cd;border-radius:16px;background:#f1f8f4;color:#173c3c}.reader-jump label{font-weight:700}.reader-jump input{width:120px;padding:10px 12px;border:1px solid #8aaea0;border-radius:8px;background:#fff;color:#173c3c}.reader-jump button{padding:10px 20px;border:0;border-radius:8px;background:#176e68;color:white;cursor:pointer}.reader-jump button:disabled{opacity:.5}.reader-jump span{font-size:14px}
