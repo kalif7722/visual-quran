@@ -1,0 +1,38 @@
+{
+ "QL-006":{
+  "theme":"Fairness is worth more than winning",
+  "word":{"term":"Justice","meaning":"Giving people their rights and judging honestly, even when you prefer one side."},
+  "scenes":[
+   {"title":"A ball on the boundary","image":"/lesson-art/ql-006-scene-01.webp","alt":"Umar and his friends inspect a cricket ball touching the boundary line.","text":"The red ball rolled across the grass and stopped against the boundary. Umar was keeping score. Both teams waited for his decision.","speaker":"Umar","dialogue":"Let's check where it touched the line."},
+   {"title":"A friend asks for a favour","image":"/lesson-art/ql-006-scene-02.webp","alt":"Umar holds his scorebook while his friend asks him to change the score.","text":"His best friend leaned closer. If Umar counted fewer runs for the other team, his own side might win. Umar liked his friend, but the rule had not changed.","speaker":"His friend","dialogue":"Could you count fewer runs—just this once?"},
+   {"title":"A score everyone can trust","image":"/lesson-art/ql-006-scene-03.webp","alt":"Umar records the correct score while children from both teams watch.","text":"Umar applied the agreed boundary rule and wrote the correct runs. His team did not gain an unfair advantage. The game could continue with an honest score.","speaker":"Umar","dialogue":"I am your friend. I still need to use the same rule for both teams."}
+  ],
+  "decision":{"question":"You are holding Umar's scorebook. What should you do?","choices":[
+   {"text":"Count fewer runs because he is my best friend.","feedback":"Friendship does not change another team's rights. A fair scorer uses the same rule for both sides.","correct":false},
+   {"text":"Check the agreed rule and record the correct runs.","feedback":"Yes. Check the facts, use the same rule and explain your decision calmly. Being fair can cost your team an advantage.","correct":true},
+   {"text":"Let the loudest player decide so the argument stops.","feedback":"The loudest person is not always right. Check what happened and use the rule; ask an adult if the disagreement cannot be settled safely.","correct":false}
+  ]},
+  "sequence":["Check what happened.","Apply the same agreed rule to everyone.","Explain the decision respectfully."],
+  "mission":"During a game or shared activity today, use the same rule for a friend and someone else.",
+  "talk":"Would your decision change if the teams swapped places? Explain why.",
+  "remember":"A friend deserves kindness. Everyone deserves fairness."
+ },
+ "QL-007":{
+  "theme":"A promise becomes real through your actions",
+  "word":{"term":"Trustworthiness","meaning":"Being someone others can rely on to care for what is entrusted to them and follow through honestly."},
+  "scenes":[
+   {"title":"A book and a promise","image":"/lesson-art/ql-007-scene-01.webp","alt":"Amina lends a coral storybook to Hana at the classroom bookshelf.","text":"On Monday, Amina lent Hana a favourite storybook. They agreed that Hana would return it on Friday. Hana accepted the book carefully.","speaker":"Hana","dialogue":"Thank you. I will bring it back on Friday, inshaAllah."},
+   {"title":"One more chapter?","image":"/lesson-art/ql-007-scene-02.webp","alt":"Hana considers the unfinished borrowed book beside her schoolbag on Thursday evening.","text":"On Thursday evening, Hana reached an exciting chapter. She wanted another day. Then she remembered that the book belonged to Amina, who was expecting it back.","speaker":"Hana's thought","dialogue":"I want to finish—but I agreed to return it tomorrow."},
+   {"title":"Trust goes back with the book","image":"/lesson-art/ql-007-scene-03.webp","alt":"Hana returns the borrowed storybook to Amina the following school morning.","text":"Hana packed the book that evening and returned it on Friday. She asked whether she could borrow it again another time. Keeping her word mattered more than finishing immediately.","speaker":"Hana","dialogue":"Here is your book, as promised. May I borrow it again another time?"}
+  ],
+  "decision":{"question":"What would help Hana keep her promise?","choices":[
+   {"text":"Keep the book until I finish. Amina probably will not mind.","feedback":"That changes the agreement without Amina's permission. Return it on time, or ask before changing the plan.","correct":false},
+   {"text":"Tell Amina I returned it, even though it is still at home.","feedback":"A second wrong does not fix a missed promise. Be honest about what happened and arrange to put it right.","correct":false},
+   {"text":"Pack it tonight and return it on the agreed day.","feedback":"Yes. Planning makes a promise easier to keep. If an unavoidable problem prevents it, tell Amina promptly, apologise and ask about a new arrangement.","correct":true}
+  ]},
+  "sequence":["Agree honestly on what you can do and when.","Make a plan and prepare a reminder.","Follow through; communicate promptly if something unavoidable changes."],
+  "mission":"Choose one small commitment you can keep today. Say what you will do and when, then follow through.",
+  "talk":"What should Hana do if she becomes ill and cannot come to school on Friday?",
+  "remember":"Promise thoughtfully. Prepare carefully. Follow through honestly."
+ }
+}
