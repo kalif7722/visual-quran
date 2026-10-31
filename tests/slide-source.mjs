@@ -6,3 +6,15 @@ assert.equal((await serveSlideList(new Request('https://example.com/api/surah-sl
 const empty=await serveSlideList(new Request('https://example.com/api/surah-slides/002/al-baqarah/ta'),{QURAN_ASSETS:{list:async()=>({objects:[],truncated:false})}});assert.equal((await empty.json()).slides,0);
 const down=await serveSlideList(new Request('https://example.com/api/surah-slides/001/al-fatihah/en'),{QURAN_ASSETS:{list:async()=>{throw Error()}}});assert.equal(down.status,502);
 console.log('Slide discovery: language folder isolation, numeric order, pagination, manifest-free uploads, empty/error states passed.');
+
+// Insert an out-of-sequence filename without changing any existing slide identity.
+const prefix='surahs/002-al-baqarah/en/';
+const manifest={language:'en',slides:234,files:[{slide:124,file:'002-al-baqarah-124.webp'},{slide:124.2,file:'002-al-baqarah-1244.webp'},{slide:125,file:'002-al-baqarah-125.webp'},{slide:126,file:'002-al-baqarah-126.webp'}]};
+const bucket={list:async()=>({objects:[124,125,1244,127].map(n=>({key:prefix+`002-al-baqarah-${n}.webp`})),truncated:false}),get:async key=>key===prefix+'manifest.json'?{json:async()=>manifest}:null};
+const list=async b=>(await serveSlideList(new Request('https://example.com/api/surah-slides/002/al-baqarah/en'),{QURAN_ASSETS:b})).json();
+assert.deepEqual((await list(bucket)).files.map(f=>f.number),[124,1244,125,127]);
+assert.equal((await list(bucket)).slides,4); // Stale count ignored; missing files excluded, unlisted uploads retained.
+assert.deepEqual((await list({...bucket,get:async()=>({json:async()=>{throw Error('bad JSON')}})})).files.map(f=>f.number),[124,125,127,1244]);
+assert.deepEqual((await list({...bucket,get:async()=>({json:async()=>({...manifest,language:'ta'})})})).files.map(f=>f.number),[124,125,127,1244]);
+assert.deepEqual((await list({...bucket,get:async key=>key==='surahs/002-al-baqarah/manifest.json'?{json:async()=>manifest}:null})).files.map(f=>f.number),[124,1244,125,127]);
+console.log('Manifest insertion ordering, stable IDs, stale counts, missing/unlisted files, malformed fallback and language isolation passed.');
