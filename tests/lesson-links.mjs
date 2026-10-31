@@ -14,7 +14,7 @@ assert.equal(visualTarget(2,201,'ta'),null);
 console.log('Lesson deep links: verse/range bounds, reader URLs and visual mapping precision passed.');
 
 const {default:mappings}=await import('../src/lesson-slide-map.json',{with:{type:'json'}});
-assert.equal(Object.keys(mappings).length,21);
+assert.equal(Object.keys(mappings).length,60);
 for(const [id,item] of Object.entries(mappings)){
  const links=lessonLinks(item.reference,'en',id);
  assert.deepEqual(links.slides,item.slides);
@@ -23,4 +23,11 @@ for(const [id,item] of Object.entries(mappings)){
  assert.deepEqual(lessonLinks(item.reference,'ta',id).slides,[]);
 }
 assert.deepEqual(lessonLinks('83:1-6','en','QL-008').slides,[2,3]);
-console.log('All 21 user mappings, multi-slide lesson and Tamil mapping isolation passed.');
+console.log('All 60 user mappings, multi-slide lesson and Tamil mapping isolation passed.');
+
+assert.deepEqual(lessonLinks('39:53-54','en','QL-023').slides,[27,28]);
+assert.deepEqual(lessonLinks('1:1-7','en','QL-027').slides,[4,5,6,7,8,9]);
+assert.deepEqual(lessonLinks('112:1-4','en','QL-028').slides,[3,4,5,6]);
+
+assert.deepEqual(lessonLinks('2:153','en','QL-025').slides,[1244]);
+assert.deepEqual(lessonLinks('2:261','en','QL-050').slides,[221]);

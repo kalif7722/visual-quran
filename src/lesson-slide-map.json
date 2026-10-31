@@ -167,5 +167,349 @@
     ],
     "language": "en",
     "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-022": {
+    "reference": "2:186",
+    "slides": [
+      152
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-023": {
+    "reference": "39:53-54",
+    "slides": [
+      27,
+      28
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-024": {
+    "reference": "3:159",
+    "slides": [
+      143
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-025": {
+    "reference": "2:153",
+    "slides": [
+      1244
+    ],
+    "language": "en",
+    "source": "User slide position 125; stable uploaded filename ID 1244 (Al-Baqarah 2:153 insertion), 2026-10-31"
+  },
+  "QL-026": {
+    "reference": "99:7-8",
+    "slides": [
+      8,
+      9
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-027": {
+    "reference": "1:1-7",
+    "slides": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-028": {
+    "reference": "112:1-4",
+    "slides": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-029": {
+    "reference": "113:1-5",
+    "slides": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-030": {
+    "reference": "114:1-6",
+    "slides": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-031": {
+    "reference": "31:14-15",
+    "slides": [
+      9
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-032": {
+    "reference": "31:18-19",
+    "slides": [
+      12
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-033": {
+    "reference": "4:36",
+    "slides": [
+      30
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-034": {
+    "reference": "4:86",
+    "slides": [
+      77
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-035": {
+    "reference": "58:11",
+    "slides": [
+      7
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-036": {
+    "reference": "2:262-264",
+    "slides": [
+      222,
+      223
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-037": {
+    "reference": "49:13",
+    "slides": [
+      9
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-038": {
+    "reference": "4:135",
+    "slides": [
+      123
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-039": {
+    "reference": "49:10",
+    "slides": [
+      6
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-040": {
+    "reference": "3:92",
+    "slides": [
+      85
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-041": {
+    "reference": "16:10-11",
+    "slides": [
+      8
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-042": {
+    "reference": "16:68-69",
+    "slides": [
+      50
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-043": {
+    "reference": "67:3-4",
+    "slides": [
+      4
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-044": {
+    "reference": "67:15",
+    "slides": [
+      11
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-045": {
+    "reference": "7:31",
+    "slides": [
+      29
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-046": {
+    "reference": "6:99",
+    "slides": [
+      94
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-047": {
+    "reference": "78:9-11",
+    "slides": [
+      5
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-048": {
+    "reference": "55:19-23",
+    "slides": [
+      8
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-049": {
+    "reference": "6:38",
+    "slides": [
+      32
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-050": {
+    "reference": "2:261",
+    "slides": [
+      221
+    ],
+    "language": "en",
+    "source": "Corrected supplied 261 to uploaded slide 221 after visually verifying artwork explicitly cites Quran 2:261, 2026-10-31"
+  },
+  "QL-051": {
+    "reference": "103:1-3",
+    "slides": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-052": {
+    "reference": "96:1-5",
+    "slides": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-053": {
+    "reference": "16:43",
+    "slides": [
+      32
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-054": {
+    "reference": "17:36",
+    "slides": [
+      28
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-055": {
+    "reference": "24:27-28",
+    "slides": [
+      15
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-056": {
+    "reference": "2:172",
+    "slides": [
+      141
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-057": {
+    "reference": "18:23-24",
+    "slides": [
+      13
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-058": {
+    "reference": "94:5-8",
+    "slides": [
+      7,
+      8,
+      9,
+      10
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-059": {
+    "reference": "14:40-41",
+    "slides": [
+      29
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
+  },
+  "QL-060": {
+    "reference": "2:201-202",
+    "slides": [
+      167
+    ],
+    "language": "en",
+    "source": "User-provided mapping, 2026-10-31"
   }
 }
