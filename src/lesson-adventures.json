@@ -1,38 +1,628 @@
 {
- "QL-006":{
-  "theme":"Fairness is worth more than winning",
-  "word":{"term":"Justice","meaning":"Giving people their rights and judging honestly, even when you prefer one side."},
-  "scenes":[
-   {"title":"A ball on the boundary","image":"/lesson-art/ql-006-scene-01.webp","alt":"Umar and his friends inspect a cricket ball touching the boundary line.","text":"The red ball rolled across the grass and stopped against the boundary. Umar was keeping score. Both teams waited for his decision.","speaker":"Umar","dialogue":"Let's check where it touched the line."},
-   {"title":"A friend asks for a favour","image":"/lesson-art/ql-006-scene-02.webp","alt":"Umar holds his scorebook while his friend asks him to change the score.","text":"His best friend leaned closer. If Umar counted fewer runs for the other team, his own side might win. Umar liked his friend, but the rule had not changed.","speaker":"His friend","dialogue":"Could you count fewer runs—just this once?"},
-   {"title":"A score everyone can trust","image":"/lesson-art/ql-006-scene-03.webp","alt":"Umar records the correct score while children from both teams watch.","text":"Umar applied the agreed boundary rule and wrote the correct runs. His team did not gain an unfair advantage. The game could continue with an honest score.","speaker":"Umar","dialogue":"I am your friend. I still need to use the same rule for both teams."}
-  ],
-  "decision":{"question":"You are holding Umar's scorebook. What should you do?","choices":[
-   {"text":"Count fewer runs because he is my best friend.","feedback":"Friendship does not change another team's rights. A fair scorer uses the same rule for both sides.","correct":false},
-   {"text":"Check the agreed rule and record the correct runs.","feedback":"Yes. Check the facts, use the same rule and explain your decision calmly. Being fair can cost your team an advantage.","correct":true},
-   {"text":"Let the loudest player decide so the argument stops.","feedback":"The loudest person is not always right. Check what happened and use the rule; ask an adult if the disagreement cannot be settled safely.","correct":false}
-  ]},
-  "sequence":["Check what happened.","Apply the same agreed rule to everyone.","Explain the decision respectfully."],
-  "mission":"During a game or shared activity today, use the same rule for a friend and someone else.",
-  "talk":"Would your decision change if the teams swapped places? Explain why.",
-  "remember":"A friend deserves kindness. Everyone deserves fairness."
- },
- "QL-007":{
-  "theme":"A promise becomes real through your actions",
-  "word":{"term":"Trustworthiness","meaning":"Being someone others can rely on to care for what is entrusted to them and follow through honestly."},
-  "scenes":[
-   {"title":"A book and a promise","image":"/lesson-art/ql-007-scene-01.webp","alt":"Amina lends a coral storybook to Hana at the classroom bookshelf.","text":"On Monday, Amina lent Hana a favourite storybook. They agreed that Hana would return it on Friday. Hana accepted the book carefully.","speaker":"Hana","dialogue":"Thank you. I will bring it back on Friday, inshaAllah."},
-   {"title":"One more chapter?","image":"/lesson-art/ql-007-scene-02.webp","alt":"Hana considers the unfinished borrowed book beside her schoolbag on Thursday evening.","text":"On Thursday evening, Hana reached an exciting chapter. She wanted another day. Then she remembered that the book belonged to Amina, who was expecting it back.","speaker":"Hana's thought","dialogue":"I want to finish—but I agreed to return it tomorrow."},
-   {"title":"Trust goes back with the book","image":"/lesson-art/ql-007-scene-03.webp","alt":"Hana returns the borrowed storybook to Amina the following school morning.","text":"Hana packed the book that evening and returned it on Friday. She asked whether she could borrow it again another time. Keeping her word mattered more than finishing immediately.","speaker":"Hana","dialogue":"Here is your book, as promised. May I borrow it again another time?"}
-  ],
-  "decision":{"question":"What would help Hana keep her promise?","choices":[
-   {"text":"Keep the book until I finish. Amina probably will not mind.","feedback":"That changes the agreement without Amina's permission. Return it on time, or ask before changing the plan.","correct":false},
-   {"text":"Tell Amina I returned it, even though it is still at home.","feedback":"A second wrong does not fix a missed promise. Be honest about what happened and arrange to put it right.","correct":false},
-   {"text":"Pack it tonight and return it on the agreed day.","feedback":"Yes. Planning makes a promise easier to keep. If an unavoidable problem prevents it, tell Amina promptly, apologise and ask about a new arrangement.","correct":true}
-  ]},
-  "sequence":["Agree honestly on what you can do and when.","Make a plan and prepare a reminder.","Follow through; communicate promptly if something unavoidable changes."],
-  "mission":"Choose one small commitment you can keep today. Say what you will do and when, then follow through.",
-  "talk":"What should Hana do if she becomes ill and cannot come to school on Friday?",
-  "remember":"Promise thoughtfully. Prepare carefully. Follow through honestly."
- }
+  "QL-001": {
+    "theme": "Little acts of care can make a real difference",
+    "word": {
+      "term": "Kindness",
+      "meaning": "Noticing someone’s need and helping with care."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-001-scene-01.webp",
+        "title": "The pencil that was missing",
+        "text": "The classroom grew quiet as everyone began drawing a garden. Sami opened his green pencil case. He had two yellow pencils, both sharpened and ready. Beside him, Hamza searched his bag, then his pockets, then his bag again. His paper stayed empty.\n\nSami almost carried on colouring. He wanted to finish his own picture before the bell. But he noticed Hamza looking down at the desk, trying not to disturb anyone. A small problem could feel very big when you were the only person who could not begin.",
+        "speaker": "Hamza",
+        "dialogue": "I think I left my pencil at home.",
+        "alt": "Hamza searches for a pencil while Sami notices his empty paper."
+      },
+      {
+        "image": "/lesson-art/ql-001-scene-02.webp",
+        "title": "Something small to share",
+        "text": "Sami looked at his spare pencil. It was his favourite, with a smooth point. What if it came back blunt? Then he remembered the lesson his family had read from Surah Al-Ma’un: caring for people includes the small help we can offer.\n\nHe did not call across the classroom or announce that Hamza needed help. He leaned over quietly and offered the pencil for the lesson. Hamza could borrow it and return it afterwards. Sami still had everything he needed to do his own work.",
+        "speaker": "Sami",
+        "dialogue": "You can borrow this one until the lesson ends. Shall we both get started?",
+        "alt": "Sami considers lending his spare yellow pencil to Hamza."
+      },
+      {
+        "image": "/lesson-art/ql-001-scene-03.webp",
+        "title": "Two gardens begin to grow",
+        "text": "Soon there were two gardens on the desk: Sami’s had tall sunflowers, and Hamza’s had a winding path. They worked side by side. Hamza returned the pencil after the lesson and thanked Sami for helping him begin.\n\nNobody gave Sami a prize. He had not needed one. At home he told his mother what he had learned: helping did not always mean giving away something enormous. Sometimes it meant noticing a person nearby and offering a useful little thing with a kind heart. Tomorrow, he decided, he would keep his eyes open again.",
+        "speaker": "Hamza",
+        "dialogue": "Thank you. Your spare pencil helped me join in.",
+        "alt": "Both boys draw their gardens quietly, using one pencil each."
+      }
+    ],
+    "decision": {
+      "question": "What could Sami do with his spare pencil?",
+      "choices": [
+        {
+          "text": "Hide it so nobody asks to borrow it.",
+          "feedback": "Think about whether you can offer a small, useful kindness.",
+          "correct": false
+        },
+        {
+          "text": "Offer it quietly and agree when it should be returned.",
+          "feedback": "Yes. He helps without embarrassing Hamza and makes the borrowing clear.",
+          "correct": true
+        },
+        {
+          "text": "Announce to everyone that Hamza forgot his things.",
+          "feedback": "That may embarrass him. Help can be offered gently and privately.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Notice what someone needs.",
+      "Offer useful help kindly.",
+      "Follow through with care."
+    ],
+    "mission": "With an adult’s guidance, offer one small kindness today: lend a pencil, share a resource or help tidy.",
+    "talk": "Why did Sami speak quietly? Can a small kindness matter even when nobody praises it?",
+    "remember": "Notice a need. Offer a little help. Care about the person."
+  },
+  "QL-002": {
+    "theme": "Let your words make room for someone",
+    "word": {
+      "term": "Respect",
+      "meaning": "Treating people with dignity in what you say and do."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-002-scene-01.webp",
+        "title": "A difficult first turn",
+        "text": "Bilal was new at school. At break time he joined a game with a red ball. When it rolled towards him, he hurried to kick it—but his foot missed, and the ball rolled past. Two children laughed and began calling him a name about his mistake.\n\nMaryam heard them from the edge of the playground. She knew how uncomfortable a first day could feel. Bilal gave a small smile, but he stepped back from the game. The joke was not making everyone happy. It was making one person feel unwelcome.",
+        "speaker": "Bilal",
+        "dialogue": "Could I have another turn?",
+        "alt": "Bilal stands near the red ball after missing a kick as classmates tease him."
+      },
+      {
+        "image": "/lesson-art/ql-002-scene-02.webp",
+        "title": "Maryam chooses her words",
+        "text": "For a moment Maryam wondered whether to stay quiet. She did not want the others to laugh at her too. Then she remembered the Quran’s warning against mocking people and calling them hurtful names. A mistake with a ball did not tell anyone what a person was worth.\n\nShe walked over and used Bilal’s real name. She spoke calmly to the other children, without inventing a cruel nickname for them in return. Everyone was still learning something, she explained. They could make the game a place where people felt safe to try.",
+        "speaker": "Maryam",
+        "dialogue": "His name is Bilal. Let’s give him another turn. We all miss sometimes.",
+        "alt": "Maryam stands beside Bilal and speaks kindly to the other children."
+      },
+      {
+        "image": "/lesson-art/ql-002-scene-03.webp",
+        "title": "Room in the game",
+        "text": "Maryam passed the ball gently to Bilal. This time he stopped it before passing it back. It was a small success, and there would be more practice ahead. He did not have to become the best player to deserve a place in the game.\n\nOne of the children apologised for the nickname. Maryam invited everyone to use each other’s names and take turns. Bilal moved closer to the group again. Kind words had not changed the rules of football; they had changed how the children treated a person who wanted to join them.",
+        "speaker": "Maryam",
+        "dialogue": "You belong in the game while you’re learning, too.",
+        "alt": "Maryam passes the red ball to Bilal while the group makes room for him."
+      }
+    ],
+    "decision": {
+      "question": "How can Maryam help Bilal feel welcome?",
+      "choices": [
+        {
+          "text": "Give the teasing children a hurtful nickname.",
+          "feedback": "That repeats the same harm. Speak up without mocking anyone.",
+          "correct": false
+        },
+        {
+          "text": "Use his name, stop the teasing calmly and invite another turn.",
+          "feedback": "Yes. Respect is something we can show through both words and actions.",
+          "correct": true
+        },
+        {
+          "text": "Tell Bilal to leave until he is better at the game.",
+          "feedback": "Everyone deserves respect while learning. Skill is not a condition for kindness.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Notice how the words affect someone.",
+      "Speak respectfully and challenge the teasing.",
+      "Include the person in the activity."
+    ],
+    "mission": "Use someone’s preferred name and invite them into a game or conversation. Ask an adult for help if bullying continues.",
+    "talk": "How can you tell when a joke has become hurtful? What could you say without being unkind back?",
+    "remember": "Use words that protect dignity and make room for others."
+  },
+  "QL-003": {
+    "theme": "A pause can protect someone from an unfair story",
+    "word": {
+      "term": "Verification",
+      "meaning": "Checking whether news is reliable before acting on it or passing it on."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-003-scene-01.webp",
+        "title": "A message on the screen",
+        "text": "Yusuf was about to put away the tablet when a message appeared in the class group. Someone said that a pupil had taken a missing watch. There was no explanation of how they knew, only an angry message asking everyone to share it.\n\nYusuf’s finger hovered near the share button. If he passed it on quickly, his friends would hear the news from him. But then he imagined the pupil arriving at school to find that everyone had already decided they were guilty. A message could travel much faster than the truth.",
+        "speaker": "Yusuf",
+        "dialogue": "Who actually knows what happened?",
+        "alt": "Yusuf pauses over a tablet message before deciding whether to share it."
+      },
+      {
+        "image": "/lesson-art/ql-003-scene-02.webp",
+        "title": "Checking with someone trustworthy",
+        "text": "Yusuf took the tablet to his father. Together they separated what the message claimed from what anyone had confirmed. Nobody had given a reliable account of seeing the watch being taken. They decided not to forward the accusation.\n\nHis father helped him ask the teacher privately about the missing watch. Yusuf remembered the Quran’s guidance to check news carefully so people are not harmed through ignorance. Checking did not mean asking more children to repeat the rumour. It meant finding a trustworthy way to understand what had really happened.",
+        "speaker": "His father",
+        "dialogue": "Let’s ask someone who can check the facts, without spreading the accusation.",
+        "alt": "Yusuf asks his father for help checking the message."
+      },
+      {
+        "image": "/lesson-art/ql-003-scene-03.webp",
+        "title": "The truth catches up",
+        "text": "The next day the teacher explained that the watch had been found inside its owner’s own bag. Nobody had taken it. Yusuf felt relieved that he had not helped the rumour grow. A person’s good name was too important to gamble on a hurried message.\n\nThe teacher reminded the class that anyone who had shared the accusation should correct it with the people who received it. Yusuf could see that being responsible online involved more than spotting a mistake. It also meant helping repair harm if you had passed the mistake along.",
+        "speaker": "The teacher",
+        "dialogue": "The watch was found in its owner’s bag. Please do not repeat the accusation.",
+        "alt": "The teacher explains the facts to Yusuf after the watch is found."
+      }
+    ],
+    "decision": {
+      "question": "What should Yusuf do before forwarding the message?",
+      "choices": [
+        {
+          "text": "Share it first and check later.",
+          "feedback": "Once shared, an accusation can hurt someone even if you later discover it is false.",
+          "correct": false
+        },
+        {
+          "text": "Pause and ask a trusted adult to help verify it privately.",
+          "feedback": "Yes. Check reliable facts before spreading a claim that could harm someone.",
+          "correct": true
+        },
+        {
+          "text": "Ask every classmate whether they heard the rumour.",
+          "feedback": "That can spread the claim further. Seek reliable help without broadcasting it.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Pause before sharing.",
+      "Check through a reliable source or trusted adult.",
+      "Share only responsibly; correct any false claim you passed on."
+    ],
+    "mission": "Practise a pause before sharing a surprising claim. Ask: who knows, what is confirmed, and could sharing hurt someone?",
+    "talk": "If Yusuf had already shared the accusation, what could he do to help put it right?",
+    "remember": "A message is not proof. Pause, check and protect people from harm."
+  },
+  "QL-004": {
+    "theme": "Protect someone’s dignity, even when they are absent",
+    "word": {
+      "term": "Backbiting",
+      "meaning": "Speaking about someone behind their back in a way they would dislike."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-004-scene-01.webp",
+        "title": "Whispers at lunchtime",
+        "text": "Amina sat under the school garden tree with two friends. They opened their lunch boxes and began talking about the class project. Soon the conversation changed. One girl mentioned an absent classmate’s mistake, and the others leaned closer to hear more.\n\nAmina felt the pull of the whispering circle. Listening might make her feel included. Yet the girl they were discussing was not there to explain herself. Amina imagined her own mistakes being passed around during lunch. The conversation no longer felt harmless or kind.",
+        "speaker": "Amina’s thought",
+        "dialogue": "Would she be comfortable hearing us say this about her?",
+        "alt": "Amina listens uneasily while friends whisper during lunch."
+      },
+      {
+        "image": "/lesson-art/ql-004-scene-02.webp",
+        "title": "A different direction",
+        "text": "Amina remembered the warning against backbiting in Surah Al-Hujurat. She did not need to decide that her friends were terrible people. She needed to decide what she would do next. She put the project folder between them and spoke gently.\n\nThey still needed to design a garden poster, and everyone had ideas to contribute. Amina suggested talking about the work instead of the absent girl. If the whispering continued, she could leave the conversation respectfully. Joining in was not the price she had to pay for friendship.",
+        "speaker": "Amina",
+        "dialogue": "Let’s leave her mistakes out of our lunch. Which colours shall we use for our project?",
+        "alt": "Amina redirects her friends towards the class project folder."
+      },
+      {
+        "image": "/lesson-art/ql-004-scene-03.webp",
+        "title": "Something better to build",
+        "text": "The children began arranging coloured paper and drawing leaves for their poster. Soon their hands were busy making something together. One friend admitted that the earlier conversation had gone too far. Amina was glad she had found words that were clear without being cruel.\n\nShe also knew that changing the subject did not erase hurtful words already said. If they had spread the story, they would need to stop repeating it and ask a trusted adult how to repair the harm. A kinder conversation was a beginning they could choose right now.",
+        "speaker": "Amina",
+        "dialogue": "We can make something good together instead.",
+        "alt": "The friends work together on a colourful craft project."
+      },
+      {
+        "image": "/lesson-art/ql-004-scene-04.webp",
+        "title": "When speaking up is the right thing",
+        "text": "Later Amina asked her teacher an important question. Did avoiding gossip mean never telling anyone about a problem? The teacher explained that asking a trusted adult for help with bullying, danger or unfair treatment was different from sharing faults for entertainment.\n\nAmina could explain what happened truthfully, to someone able to help, without spreading the story around the playground. She went home with a clearer rule: protect people’s dignity, and seek help when someone needs protection. Keeping a harmful secret was not the lesson.",
+        "speaker": "The teacher",
+        "dialogue": "Tell a trusted adult when someone is being hurt or needs help.",
+        "alt": "Amina privately asks her teacher about the difference between gossip and seeking help."
+      }
+    ],
+    "decision": {
+      "question": "What could Amina do when lunch becomes gossip?",
+      "choices": [
+        {
+          "text": "Add another embarrassing detail.",
+          "feedback": "That increases the harm. The absent person deserves dignity.",
+          "correct": false
+        },
+        {
+          "text": "Redirect the conversation kindly, or leave if it continues.",
+          "feedback": "Yes. You can protect someone’s dignity without insulting your friends.",
+          "correct": true
+        },
+        {
+          "text": "Promise never to tell an adult about any problem.",
+          "feedback": "Seeking help with harm, danger or bullying is different from gossip.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Recognise that the conversation is hurting someone’s dignity.",
+      "Redirect kindly or step away.",
+      "Seek adult help when there is harm to address."
+    ],
+    "mission": "Practise a gentle sentence for changing a hurtful conversation. Tell a trusted adult about any bullying or danger.",
+    "talk": "How is asking a teacher for help different from sharing a person’s faults for fun?",
+    "remember": "Leave gossip behind. Keep the door open to getting help."
+  },
+  "QL-005": {
+    "theme": "Strength can begin with a calm pause",
+    "word": {
+      "term": "Self-control",
+      "meaning": "Choosing your response even when a feeling is strong."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-005-scene-01.webp",
+        "title": "Crash! The tower falls",
+        "text": "Zayd had spent a long time building a tall tower. He balanced the final block, stepped back and smiled. Then his little brother hurried past the table. An elbow brushed the corner. Blocks tumbled and scattered across the floor.\n\nZayd’s face grew hot. His hands tightened, and words rushed into his mind before he had time to think. His brother stood very still beside the fallen tower. Zayd was angry, and the tower really was broken. The important question was what he would do with that anger.",
+        "speaker": "Zayd’s thought",
+        "dialogue": "I worked so hard on that!",
+        "alt": "Zayd looks upset beside his fallen block tower and his younger brother."
+      },
+      {
+        "image": "/lesson-art/ql-005-scene-02.webp",
+        "title": "Making room for a better choice",
+        "text": "Zayd stepped away from the blocks and opened his hands. He took a few slow breaths. He remembered the Quran’s praise for those who restrain anger and pardon others. Feeling anger did not mean he had to shout, insult or hit.\n\nWhen his voice felt steadier, he explained that the tower mattered to him. He asked his brother not to run beside the building table. Being gentle did not mean pretending nothing had happened. It meant making room to choose words that could solve a problem without causing another hurt.",
+        "speaker": "Zayd",
+        "dialogue": "I’m upset. Please walk near my blocks. I need a moment to calm down.",
+        "alt": "Zayd steps back and relaxes his hands before speaking."
+      },
+      {
+        "image": "/lesson-art/ql-005-scene-03.webp",
+        "title": "A smaller tower, a stronger start",
+        "text": "His brother apologised and helped collect the scattered blocks. Zayd invited him to build a small section at the side while he repaired the base. Together they chose a safer place for the tower, away from the busy walkway. The new building looked different, but the afternoon was not ruined.\n\nLater Zayd told his father how close he had come to shouting. They talked about taking a pause and asking for help if anger felt too big. Zayd had practised a kind of strength that nobody could measure by the height of a tower.",
+        "speaker": "Zayd",
+        "dialogue": "Let’s clear the floor and build this part together.",
+        "alt": "The brothers rebuild a small section together after setting a clear boundary."
+      }
+    ],
+    "decision": {
+      "question": "What can Zayd do while he feels angry?",
+      "choices": [
+        {
+          "text": "Shout and knock over his brother’s things.",
+          "feedback": "That adds another hurt. Strong feelings need a safe response.",
+          "correct": false
+        },
+        {
+          "text": "Pause, calm his body and explain the boundary respectfully.",
+          "feedback": "Yes. Restraining anger helps him respond clearly without hurting someone.",
+          "correct": true
+        },
+        {
+          "text": "Pretend he is happy and never explain the problem.",
+          "feedback": "He can be honest about feeling upset and still speak gently.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Pause and make your actions safe.",
+      "Calm down enough to speak respectfully.",
+      "Explain the problem and work on a repair."
+    ],
+    "mission": "Practise a calm pause with an adult. Choose a sentence you can use when frustrated.",
+    "talk": "How did Zayd show both gentleness and a clear boundary? When might he need an adult’s help?",
+    "remember": "A strong feeling can meet a gentle, responsible response."
+  },
+  "QL-006": {
+    "theme": "Fairness is worth more than winning",
+    "word": {
+      "term": "Justice",
+      "meaning": "Giving people their rights and judging honestly, even when you prefer one side."
+    },
+    "scenes": [
+      {
+        "title": "A ball on the boundary",
+        "image": "/lesson-art/ql-006-scene-01.webp",
+        "alt": "Umar and his friends inspect a cricket ball touching the boundary line.",
+        "text": "The cricket match was almost over, and Umar was keeping score. His best friend’s team needed every run they could save. A red ball rolled across the grass and stopped against the boundary. Children from both sides hurried over, each hoping the decision would help their team.\n\nUmar put down his scorebook and looked carefully. Before the game, everyone had agreed what would count as a boundary. Now he had to use that same rule. It was easy to agree to fairness at the beginning; it felt harder when the score was close.",
+        "speaker": "Umar",
+        "dialogue": "Let's check where it touched the line."
+      },
+      {
+        "title": "A friend asks for a favour",
+        "image": "/lesson-art/ql-006-scene-02.webp",
+        "alt": "Umar holds his scorebook while his friend asks him to change the score.",
+        "text": "His best friend leaned towards him and spoke quietly. Could Umar count fewer runs, just this once? Their side might win if he did. Umar wanted his friend to be happy. He also liked being part of the team, and he did not want anyone to call him disloyal.\n\nThen he thought about the players on the other side. They had played under the same rules. Their rights did not become smaller because Umar preferred a different team. He remembered the Quran’s call to be just. Fairness had to guide his decision even when feelings pulled another way.",
+        "speaker": "His friend",
+        "dialogue": "Could you count fewer runs—just this once?"
+      },
+      {
+        "title": "A score everyone can trust",
+        "image": "/lesson-art/ql-006-scene-03.webp",
+        "alt": "Umar records the correct score while children from both teams watch.",
+        "text": "Umar checked the agreed boundary rule and recorded the correct runs. He explained what he had seen without making fun of anyone. His friend looked disappointed, but Umar did not change the score to escape that uncomfortable moment. Both teams needed a score they could trust.\n\nThe game continued. Afterwards Umar reminded his friend that they could still practise together and enjoy being teammates. Friendship did not need a dishonest favour to survive. If the teams swapped places next week, Umar would apply the same rule again. That was what made the game fair for everyone.",
+        "speaker": "Umar",
+        "dialogue": "I am your friend. I still need to use the same rule for both teams."
+      }
+    ],
+    "decision": {
+      "question": "You are holding Umar's scorebook. What should you do?",
+      "choices": [
+        {
+          "text": "Count fewer runs because he is my best friend.",
+          "feedback": "Friendship does not change another team's rights. A fair scorer uses the same rule for both sides.",
+          "correct": false
+        },
+        {
+          "text": "Check the agreed rule and record the correct runs.",
+          "feedback": "Yes. Check the facts, use the same rule and explain your decision calmly. Being fair can cost your team an advantage.",
+          "correct": true
+        },
+        {
+          "text": "Let the loudest player decide so the argument stops.",
+          "feedback": "The loudest person is not always right. Check what happened and use the rule; ask an adult if the disagreement cannot be settled safely.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Check what happened.",
+      "Apply the same agreed rule to everyone.",
+      "Explain the decision respectfully."
+    ],
+    "mission": "During a game or shared activity today, use the same rule for a friend and someone else.",
+    "talk": "Would your decision change if the teams swapped places? Explain why.",
+    "remember": "A friend deserves kindness. Everyone deserves fairness."
+  },
+  "QL-007": {
+    "theme": "A promise becomes real through your actions",
+    "word": {
+      "term": "Trustworthiness",
+      "meaning": "Being someone others can rely on to care for what is entrusted to them and follow through honestly."
+    },
+    "scenes": [
+      {
+        "title": "A book and a promise",
+        "image": "/lesson-art/ql-007-scene-01.webp",
+        "alt": "Amina lends a coral storybook to Hana at the classroom bookshelf.",
+        "text": "On Monday, Amina lent Hana a favourite storybook from the classroom shelf. Its coral cover opened onto a world of exciting adventures. Before Hana took it home, Amina explained that she needed it back on Friday. Hana listened and agreed to the day.\n\nShe held the book carefully as she thanked her friend. Borrowing meant the story could be hers to enjoy for a little while, but the book still belonged to Amina. Hana wanted to be someone her friend could trust, both with the pages and with the promise she had just made.",
+        "speaker": "Hana",
+        "dialogue": "Thank you. I will bring it back on Friday, inshaAllah."
+      },
+      {
+        "title": "One more chapter?",
+        "image": "/lesson-art/ql-007-scene-02.webp",
+        "alt": "Hana considers the unfinished borrowed book beside her schoolbag on Thursday evening.",
+        "text": "On Thursday evening, Hana reached the most exciting chapter. The hero had found a mysterious path, and she wanted to know where it led. Only a few chapters remained. She looked from the book to her schoolbag and wished Friday were further away.\n\nPerhaps Amina would not mind another day. But Hana realised that guessing was not the same as asking permission. She remembered the Quran’s teaching about fulfilling commitments. Her wish to finish did not quietly change their agreement. She needed to decide what to do before the busy school morning arrived.",
+        "speaker": "Hana's thought",
+        "dialogue": "I want to finish—but I agreed to return it tomorrow."
+      },
+      {
+        "title": "A plan for Friday",
+        "image": "/lesson-art/ql-007-scene-04.webp",
+        "alt": "Hana places the borrowed book in her purple schoolbag and prepares a reminder.",
+        "text": "Hana slipped a bookmark between the pages and closed the book gently. Then she checked that it was clean and placed it inside her purple schoolbag. She put a reminder beside her things for the morning. The promise now had a plan to help it happen.\n\nHer mother explained that if an unavoidable problem arose, Hana should tell Amina promptly and honestly, apologise and ask about a new arrangement. Saying “inshaAllah” was not a reason to stop trying. Tonight, Hana could prepare; tomorrow, she could follow through.",
+        "speaker": "Hana",
+        "dialogue": "I can put it in my bag now, so I am ready in the morning."
+      },
+      {
+        "title": "Trust goes back with the book",
+        "image": "/lesson-art/ql-007-scene-03.webp",
+        "alt": "Hana returns the borrowed storybook to Amina the following school morning.",
+        "text": "On Friday Hana found Amina by the classroom shelf and handed back the book. She admitted that she had not reached the ending yet, and asked whether she might borrow it another time. Amina was pleased to have it back when they had agreed.\n\nHana still wanted to know what happened on the mysterious path. That could wait. She had learned that trust grows through ordinary actions: remembering the day, caring for someone else’s belongings and doing what you said you would do. Returning a book had become a lesson in keeping her word.",
+        "speaker": "Hana",
+        "dialogue": "Here is your book, as promised. May I borrow it again another time?"
+      }
+    ],
+    "decision": {
+      "question": "What would help Hana keep her promise?",
+      "choices": [
+        {
+          "text": "Keep the book until I finish. Amina probably will not mind.",
+          "feedback": "That changes the agreement without Amina's permission. Return it on time, or ask before changing the plan.",
+          "correct": false
+        },
+        {
+          "text": "Tell Amina I returned it, even though it is still at home.",
+          "feedback": "A second wrong does not fix a missed promise. Be honest about what happened and arrange to put it right.",
+          "correct": false
+        },
+        {
+          "text": "Pack it tonight and return it on the agreed day.",
+          "feedback": "Yes. Planning makes a promise easier to keep. If an unavoidable problem prevents it, tell Amina promptly, apologise and ask about a new arrangement.",
+          "correct": true
+        }
+      ]
+    },
+    "sequence": [
+      "Agree honestly on what you can do and when.",
+      "Make a plan and prepare a reminder.",
+      "Follow through; communicate promptly if something unavoidable changes."
+    ],
+    "mission": "Choose one small commitment you can keep today. Say what you will do and when, then follow through.",
+    "talk": "What should Hana do if she becomes ill and cannot come to school on Friday?",
+    "remember": "Promise thoughtfully. Prepare carefully. Follow through honestly."
+  },
+  "QL-008": {
+    "theme": "Give others the same fairness you would want",
+    "word": {
+      "term": "Honesty",
+      "meaning": "Being truthful in your words and fair in what you give."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-008-scene-01.webp",
+        "title": "A busy little stall",
+        "text": "Adam helped at the school’s date stall beneath a saffron canopy. Children queued with small bags, and the table filled with cheerful conversation. Each bag was supposed to contain the amount the stall had promised. Adam liked helping and wanted the queue to move quickly.\n\nAs he reached for the next bag, he noticed that it looked lighter than the others. Perhaps he had counted too quickly. The customer might not notice until later. For a moment Adam considered setting the bag aside and hoping somebody else would deal with it.",
+        "speaker": "Adam’s thought",
+        "dialogue": "Did I give this bag the full amount?",
+        "alt": "Adam notices that one bag of dates may contain less than promised."
+      },
+      {
+        "image": "/lesson-art/ql-008-scene-02.webp",
+        "title": "Taking time to check",
+        "text": "Adam opened the bag and counted carefully onto a tray. He checked against the amount they had advertised. The bag was short. Fixing it would slow him down for a moment, but handing it over would mean accepting payment for something he had not fully provided.\n\nHe remembered the warning in Surah Al-Mutaffifin about people who want full measure for themselves but give others less. Adam would not be happy receiving a short bag. The same fairness belonged to the child waiting at his stall. A busy table was no excuse to ignore it.",
+        "speaker": "Adam",
+        "dialogue": "I need to check this and make sure you receive the full amount.",
+        "alt": "Adam checks the dates carefully on a tray before completing the sale."
+      },
+      {
+        "image": "/lesson-art/ql-008-scene-03.webp",
+        "title": "The full amount, with care",
+        "text": "Adam added what was missing and checked the bag again before handing it over. He thanked his friend for waiting and told the adult helping at the stall what had happened. Together they decided to check each bag before accepting payment, so the same mistake was less likely to happen again.\n\nThe queue moved on. Adam had done more than fix one bag: he had practised giving another person their due. If he discovered a short bag after a sale, he would ask the adult to help make it right. Honesty meant correcting mistakes, not hiding them.",
+        "speaker": "Adam",
+        "dialogue": "Here is the full amount. Thank you for waiting while I checked.",
+        "alt": "Adam hands the corrected bag of dates to a waiting child."
+      }
+    ],
+    "decision": {
+      "question": "What should Adam do about the short bag?",
+      "choices": [
+        {
+          "text": "Sell it quickly because the customer may not notice.",
+          "feedback": "The customer is owed what was promised, whether or not they notice a shortage.",
+          "correct": false
+        },
+        {
+          "text": "Check the amount, correct the bag and improve the checking routine.",
+          "feedback": "Yes. Honest measure includes fixing mistakes and preventing them where possible.",
+          "correct": true
+        },
+        {
+          "text": "Blame another helper without knowing what happened.",
+          "feedback": "An accusation does not fill the bag. Check facts and correct the problem.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Check what was promised.",
+      "Measure or count carefully and correct any shortage.",
+      "Give the full amount and put mistakes right."
+    ],
+    "mission": "Practise fair sharing or careful counting with an adult. Use the agreed amount for everyone.",
+    "talk": "Why is “they probably will not notice” a poor reason to give someone less?",
+    "remember": "Give the full measure. Correct the mistake. Protect the trust."
+  },
+  "QL-009": {
+    "theme": "A better reply can be calm, clear and safe",
+    "word": {
+      "term": "Goodness",
+      "meaning": "Choosing a response that seeks what is right and helpful."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-009-scene-01.webp",
+        "title": "Someone steps in front",
+        "text": "Salma had waited patiently in the lunch queue. She could smell warm food from the serving table, and her stomach rumbled. Just as the line moved forward, a boy stepped in front of her. He acted as though nobody else had been waiting.\n\nSalma felt a sharp burst of anger. She wanted to push past him or say something that would make everyone laugh at him. But that could turn a queue problem into a bigger argument. She took a breath and gave herself a moment to choose her next words.",
+        "speaker": "Salma’s thought",
+        "dialogue": "I can stand up for my turn without starting a fight.",
+        "alt": "A boy steps ahead of Salma in the school lunch queue."
+      },
+      {
+        "image": "/lesson-art/ql-009-scene-02.webp",
+        "title": "Clear words, a steady voice",
+        "text": "Salma remembered the Quran’s guidance to respond with what is better. That did not mean she had to pretend the queue was fair. It meant she could choose a good way to address what had happened. She kept her hands to herself and spoke in a steady voice.\n\nShe explained that the children behind her had been waiting too. She asked the boy to join the end of the queue. Her words were firm, but she did not call him a name or threaten him. She could protect her right to a turn while respecting his dignity.",
+        "speaker": "Salma",
+        "dialogue": "We have been waiting here. Please join the end of the queue.",
+        "alt": "Salma speaks calmly and firmly to the boy who cut in."
+      },
+      {
+        "image": "/lesson-art/ql-009-scene-03.webp",
+        "title": "Help when words are not enough",
+        "text": "The boy argued, so Salma asked the nearby teacher for help. She described what had happened without adding insults. The teacher listened and helped restore the queue. Salma did not have to win a shouting contest to receive her turn.\n\nA calm reply does not always make someone friendly at once. Salma could only choose her own response, and getting adult help was part of keeping things safe. When lunch began, she was glad the disagreement had ended without pushing. The better reply had made room for both fairness and peace.",
+        "speaker": "Salma",
+        "dialogue": "Teacher, could you help us keep the queue fair?",
+        "alt": "A teacher helps Salma and the other children restore the proper queue."
+      }
+    ],
+    "decision": {
+      "question": "How can Salma respond to the unfair turn?",
+      "choices": [
+        {
+          "text": "Push the boy and call him a name.",
+          "feedback": "That can escalate the problem and hurt someone.",
+          "correct": false
+        },
+        {
+          "text": "Speak calmly and firmly, then seek adult help if needed.",
+          "feedback": "Yes. A better reply can include a clear boundary and help with fairness.",
+          "correct": true
+        },
+        {
+          "text": "Believe she must silently accept every unfair or unsafe action.",
+          "feedback": "She can speak up and seek protection. Goodness does not require accepting harm.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Pause and keep your actions safe.",
+      "Explain the problem calmly and clearly.",
+      "Ask a trusted adult for help if it continues."
+    ],
+    "mission": "Rehearse a calm, firm sentence for a disagreement, then practise asking a trusted adult for help.",
+    "talk": "What could Salma control? Why did she ask the teacher instead of arguing louder?",
+    "remember": "Choose a better reply. Keep clear boundaries. Get help when needed."
+  },
+  "QL-010": {
+    "theme": "Care for people, including their privacy",
+    "word": {
+      "term": "Sincerity",
+      "meaning": "Trying to do good for Allah’s pleasure, with care for the people you help."
+    },
+    "scenes": [
+      {
+        "image": "/lesson-art/ql-010-scene-01.webp",
+        "title": "A parcel prepared with care",
+        "text": "Noor and her father were packing a food parcel for a family who needed support. They checked that the food was suitable and placed everything neatly in a strong bag. Noor enjoyed choosing things that would be useful, rather than simply clearing unwanted items from a cupboard.\n\nAs they finished, she imagined how it would feel to open the parcel after a difficult week. Helping was about real people with hopes and feelings, not just a bag of groceries. Her father arranged to deliver it through a trusted, discreet route.",
+        "speaker": "Noor",
+        "dialogue": "Let’s make sure the food is useful and packed carefully.",
+        "alt": "Noor and her father prepare a food parcel together."
+      },
+      {
+        "image": "/lesson-art/ql-010-scene-02.webp",
+        "title": "Does everyone need to see?",
+        "text": "Noor picked up a phone. Perhaps she could take a picture and tell everyone what they had done. Then she paused. Did the family want their situation discussed? Would the picture make the gift about praise for her instead of care for them?\n\nHer father explained that the Quran speaks well of giving charity openly and says discreet giving to those in need is better. A public example can sometimes encourage generosity, but people’s privacy and the reason for sharing still matter. They could help this family without turning their circumstances into a story for others.",
+        "speaker": "Her father",
+        "dialogue": "We can give with care, without showing who needs the help.",
+        "alt": "Noor considers whether to photograph the parcel before sharing it."
+      },
+      {
+        "image": "/lesson-art/ql-010-scene-03.webp",
+        "title": "A good deed can stay quiet",
+        "text": "Noor put the phone away and passed the parcel to her father for delivery. There would be no photograph of the family and no announcement naming them. The food would still help, even if nobody at school knew Noor had helped to pack it.\n\nLater she thought about other good deeds she could do quietly. She could help at home, share something useful or make space for another person. She did not need to hide every kind act, but she wanted to remember why she was doing it: to please Allah and care for people, rather than collect compliments.",
+        "speaker": "Noor",
+        "dialogue": "They can receive the help without everyone hearing about it.",
+        "alt": "Noor sets the phone aside and gives the parcel to her father for private delivery."
+      }
+    ],
+    "decision": {
+      "question": "What should Noor consider before sharing a photo?",
+      "choices": [
+        {
+          "text": "Post the family’s details so everyone praises her.",
+          "feedback": "That can expose their private situation and turn attention towards praise.",
+          "correct": false
+        },
+        {
+          "text": "Protect their privacy and think about her intention; give discreetly here.",
+          "feedback": "Yes. Quiet giving can protect dignity. Public giving can also be good, with appropriate care.",
+          "correct": true
+        },
+        {
+          "text": "Decide that every visible act of charity is wrong.",
+          "feedback": "The verse says public charity is good too. Consider intention, dignity and privacy.",
+          "correct": false
+        }
+      ]
+    },
+    "sequence": [
+      "Prepare useful help with care.",
+      "Consider intention, dignity and privacy.",
+      "Give responsibly without seeking praise."
+    ],
+    "mission": "Choose a small act of help with a trusted adult. Practise doing it without asking for compliments.",
+    "talk": "Why did Noor put the phone away? How can people encourage generosity while protecting someone’s privacy?",
+    "remember": "Care for the person. Protect their dignity. Remember your intention."
+  }
 }

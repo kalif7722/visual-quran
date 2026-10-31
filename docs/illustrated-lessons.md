@@ -22,3 +22,8 @@ Shared prompt direction: illustration-story, premium painted gouache children's 
 ## Progress and interaction
 
 Local key: `visual-quran-lesson-<ID>`. Only read/reflect/mission booleans are saved; storage-denied environments continue without persistence. Each lesson has independent state. Wrong choices give explanations with unlimited retries; the ending is available independently of a correct choice. Sequencing supports touch and keyboard through native buttons. No timers, public rankings, login or paid gating were added.
+
+
+## First ten stories expansion
+
+QL-001 through QL-010 now contain 32 story illustrations. QL-004 and QL-007 use four scenes; the other eight use three. Scene counts are data-driven and the ending renders every remaining scene, allowing future stories to use their natural length. Each story has expanded narration, paragraph breaks, accessible dialogue, a tailored decision, sequencing, a practical mission and a discussion prompt. Original Quran slide mappings and reader links are preserved. Modern fictional stories illustrate the concepts; they are not accounts quoted from the Quran. New generation prompt notes are in `first-ten-illustration-prompts.json`. All assets are WebP with descriptive alt text.
