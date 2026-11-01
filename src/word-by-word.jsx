@@ -1,3 +1,5 @@
+import{matchesSurah}from'./speech-recognition.js';
+import{VoiceSearch}from'./voice-search';
 import React,{useEffect,useMemo,useState}from'react';
 import{Link,useLocation,useNavigate}from'react-router-dom';
 import{surahs}from'./data';
@@ -66,7 +68,7 @@ export function WordByWord(){
   const isTamil=language==='ta';
   const target=verseTarget(location.search,current.ayahs);
   const targetStart=target?.start,targetEnd=target?.end;
-  const filteredSurahs=useMemo(()=>surahs.filter(s=>`${s.number} ${s.name} ${s.meaning}`.toLowerCase().includes(surahQuery.toLowerCase())),[surahQuery]);
+  const filteredSurahs=useMemo(()=>surahs.filter(s=>matchesSurah(s,surahQuery)),[surahQuery]);
   useEffect(()=>{
     const params=new URLSearchParams(location.search);
     const requestedSurah=params.get('surah');
@@ -153,7 +155,7 @@ export function WordByWord(){
       <div className="word-study-orbit" aria-hidden="true"><div className="orbit-ring orbit-ring-one"/><div className="orbit-ring orbit-ring-two"/><div className="orbit-center"><span>بِسْمِ</span><span>اللَّهِ</span><small>Learn one word at a time</small></div><i className="orbit-dot orbit-dot-one"/><i className="orbit-dot orbit-dot-two"/><i className="orbit-dot orbit-dot-three"/></div>
     </div>
     <div className="word-study-workspace">
-      <aside className="word-study-sidebar"><div className="word-sidebar-heading"><span>{text.choose}</span><b>114</b></div><input className="word-surah-search" value={surahQuery} onChange={e=>setSurahQuery(e.target.value)} placeholder={text.search} aria-label={text.search}/><div className="word-surah-list">{filteredSurahs.map(s=><button key={s.id} className={s.id===chapter?'selected':''} onClick={()=>selectChapter(s.id)}><span className="word-surah-number">{s.number}</span><span className="word-surah-name"><strong>{s.name}</strong><small>{s.meaning}</small></span><span className="word-surah-ayahs">{s.ayahs}</span></button>)}</div></aside>
+      <aside className="word-study-sidebar"><div className="word-sidebar-heading"><span>{text.choose}</span><b>114</b></div><div className="voice-input-row"><input className="word-surah-search" value={surahQuery} onChange={e=>setSurahQuery(e.target.value)} placeholder={text.search} aria-label={text.search}/><VoiceSearch onResult={setSurahQuery} language={language} label="Word-by-word Surahs"/></div><div className="word-surah-list">{filteredSurahs.map(s=><button key={s.id} className={s.id===chapter?'selected':''} onClick={()=>selectChapter(s.id)}><span className="word-surah-number">{s.number}</span><span className="word-surah-name"><strong>{s.name}</strong><small>{s.meaning}</small></span><span className="word-surah-ayahs">{s.ayahs}</span></button>)}</div></aside>
       <div className="word-study-main">
         <div className="word-chapter-head"><div><span className="word-chapter-kicker">SURAH {current.number} · {current.ayahs} VERSES</span><h2>{current.name}</h2><p>{current.meaning}</p></div><label className="word-language-picker"><span>{text.language}</span><select value={language} onChange={e=>selectLanguage(e.target.value)}><option value="en">{text.english}</option><option value="ta">{text.tamil}</option></select></label></div>
         <form className="reader-jump" onSubmit={jumpToVerse}><label htmlFor="verse-jump">{isTamil?'வசனத்திற்குச் செல்ல':'Jump to verse'}</label><input id="verse-jump" type="number" min="1" max={current.ayahs} required value={jumpVerse} onChange={e=>setJumpVerse(e.target.value)} placeholder={`1–${current.ayahs}`}/><button type="submit" disabled={loading}>{isTamil?'செல்':'Go'}</button>{target&&<span role="status">{isTamil?'வசனம்':'Verse'} {target.start}{target.end>target.start?`–${target.end}`:''}</span>}</form>

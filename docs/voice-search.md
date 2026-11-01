@@ -1,0 +1,7 @@
+# Voice search
+
+Shared microphone input is available in All Surahs, the global Surah chooser, word-by-word Surah chooser, lessons, themes, the Surah guide and Quran dictionary. Voice recognition starts only after a user presses Speak; Stop ends the session. English (India), Tamil and Arabic recognition locales are selectable. Locale availability depends on the browser/service and does not translate a query into another language. Existing section search capabilities still determine matches. Surah name matching tolerates punctuation, spacing and the spoken prefix “Surah”.
+
+Uses native SpeechRecognition or webkitSpeechRecognition, without adding an application audio-upload endpoint, API key or audio storage. Some browsers process audio using an online recognition service. Feature support is limited; unsupported browsers show an explanation and preserve typed search. Permission, microphone, connection, missing-speech and language errors have actionable messages. Only one recognition session can remain active; starting another cancels the first. Unmounting a control cancels capture and removes callbacks. No automatic microphone activation on page load.
+
+Validation: controller tests use a fake recognition adapter for transcripts, locale, cancellation, errors, stop and cleanup. Browser QA checks rendered controls and existing typed filtering. Real microphone capture and transcription accuracy require testing on a user's supported device and were not simulated as a live recording.

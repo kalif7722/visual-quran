@@ -1,3 +1,5 @@
+import{matchesSurah}from'./speech-recognition.js';
+import{VoiceSearch}from'./voice-search';
 import React,{createContext,useContext,useEffect,useMemo,useRef,useState}from'react';
 import{createRoot}from'react-dom/client';
 import{BrowserRouter,useNavigate,useLocation,useParams,Routes,Route,Link}from'react-router-dom';
@@ -29,7 +31,7 @@ function LanguageProvider({children}){
 function SurahMenu(){
  const{language}=useContext(LanguageContext);const ta=language==='ta';
  const nav=useNavigate();const{id}=useParams();const[currentOpen,setCurrentOpen]=useState(false);const[query,setQuery]=useState('');const ref=useRef(null);const listRef=useRef(null);
- const current=surahs.find(s=>s.id===id);const visible=surahs.filter(s=>`${s.id} ${s.name} ${s.meaning}`.toLowerCase().includes(query.toLowerCase()));
+ const current=surahs.find(s=>s.id===id);const visible=surahs.filter(s=>matchesSurah(s,query));
  useEffect(()=>{const close=e=>{if(ref.current&&!ref.current.contains(e.target))setCurrentOpen(false)};document.addEventListener('mousedown',close);return()=>document.removeEventListener('mousedown',close)},[]);
  useEffect(()=>{if(!currentOpen||query.trim()||!current||!listRef.current)return;requestAnimationFrame(()=>{const selected=listRef.current.querySelector('.selected');if(selected)selected.scrollIntoView({block:'center',behavior:'auto'})})},[currentOpen,current?.id,query]);
  const toggle=()=>{setCurrentOpen(v=>{const next=!v;if(next)setQuery('');return next})};
@@ -41,7 +43,7 @@ function SurahMenu(){
    <span className="surah-menu-chevron">⌄</span>
   </button>
   {currentOpen&&<div className="surah-menu-popover">
-   <div className="surah-menu-search"><span>⌕</span><input autoFocus value={query} onChange={e=>setQuery(e.target.value)} placeholder={ta?"சூராவைத் தேடுங்கள்…":"Find a Surah…"}/></div>
+   <div className="surah-menu-search"><span>⌕</span><input autoFocus value={query} onChange={e=>setQuery(e.target.value)} placeholder={ta?"சூராவைத் தேடுங்கள்…":"Find a Surah…"} aria-label="Find a Surah"/><VoiceSearch onResult={setQuery} language={language} label="Surah menu"/></div>
    {!query.trim()&&current&&<div className="surah-menu-context">{ta?'தற்போதைய சூராவை மையமாகக் கொண்டுள்ளது • மேலும் கீழும் சுதந்திரமாக நகரலாம்':'Centered on current Surah • scroll freely up or down'}</div>}
    <div className="surah-menu-list" ref={listRef}>{visible.map(s=><button key={s.id} className={current?.id===s.id?'selected':''} onClick={()=>choose(s)}>
     <span className="menu-num">{String(Number(s.id)).padStart(2,'0')}</span><span className="menu-copy"><strong>{s.name}</strong><small>{s.meaning}{current?.id===s.id?(ta?' • தற்போதைய':' • Current'):''}</small></span><span className="menu-arrow">→</span>
@@ -112,7 +114,7 @@ function Home(){
 
 function ThemesPage(){const{language}=useContext(LanguageContext);return <Shell><section className="page-head theme-page-head"><span className="eyebrow">{language==='ta'?'குர்ஆனை தலைப்புகளின் அடிப்படையில் ஆராயுங்கள்':'EXPLORE THE QURAN BY THEME'}</span><h1>{language==='ta'?<>போதனைகளை உங்கள்<br/>அன்றாட வாழ்க்கையுடன் இணைக்குங்கள்.</>:<>Connect the teachings<br/>to your everyday life.</>}</h1><p>{language==='ta'?'உங்கள் மனதில் உள்ள கேள்வி அல்லது வாழ்க்கைத் தலைப்பிலிருந்து தொடங்குங்கள். தொடர்புடைய சூராக்களையும் வசனங்களையும் கண்டறிந்து சிந்தியுங்கள்.':'Start with what is on your mind. Find related Surahs, read a passage and take a moment to reflect.'}</p><div className="learn-habit"><span>{themes.length} {language==='ta'?'தலைப்புகள்':'themes'}</span><span>{language==='ta'?'வசனக் குறிப்புகள்':'Verse references'}</span><span>{language==='ta'?'சிந்தனைக்கான கேள்விகள்':'Questions for reflection'}</span></div><a className="learn-jump" href="#learning-paths">{language==='ta'?'புதியவரா? ஒரு கற்றல் பாதையைத் தொடங்குங்கள் ↓':'New here? Follow a learning path ↓'}</a></section><ThemeExplorer language={language}/><LearningPaths language={language}/><Stories language={language}/><SurahTable language={language}/><StudyTools language={language}/><AboutContact language={language}/></Shell>}function AboutPage(){const{language}=useContext(LanguageContext);return <Shell><section className="page-head"><span className="eyebrow">OUR PURPOSE</span><h1>A clearer way to explore<br/>the Quran.</h1><p>Visual learning, thoughtful reflection and a welcoming place to begin.</p></section><AboutContact language={language} standalone/><SiteGuide language={language}/><StudyTools language={language}/></Shell>}
 function SurahCard({s}){return <Link className="surah-card" to={`/surah/${s.id}/${s.slug}`}><div className="num">{s.id}</div><div><h3>{s.name}</h3><p>{s.meaning}</p></div><span className="ayahs">{s.ayahs} ayahs</span><span className="arrow">→</span></Link>}
-function Surahs(){const[q,setQ]=useState('');const filtered=useMemo(()=>surahs.filter(s=>`${s.id} ${s.name} ${s.meaning}`.toLowerCase().includes(q.toLowerCase())),[q]);return <Shell><section className="page-head"><span className="eyebrow">COMPLETE QURAN</span><h1>All 114 Surahs</h1><p>Search by number, Surah name or English meaning.</p><div className="search"><span>⌕</span><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search Surahs…"/></div></section><section className="section compact"><div className="all-grid">{filtered.map(s=><SurahCard key={s.id}s={s}/>)}</div></section></Shell>}
+function Surahs(){const[q,setQ]=useState('');const filtered=useMemo(()=>surahs.filter(s=>matchesSurah(s,q)),[q]);return <Shell><section className="page-head"><span className="eyebrow">COMPLETE QURAN</span><h1>All 114 Surahs</h1><p>Search by number, Surah name or English meaning.</p><div className="search"><span>⌕</span><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search Surahs…" aria-label="Search Surahs"/><VoiceSearch onResult={setQ} label="All Surahs"/></div></section><section className="section compact"><div className="all-grid">{filtered.map(s=><SurahCard key={s.id}s={s}/>)}</div></section></Shell>}
 
 const navSubtitle=(s,n)=>{
  if(s.id==='001'){if(n===1)return'Opening';if(n===2)return'Introduction';if(n>=3&&n<=9)return`Verse ${n-2}`;if(n===10)return'Summary';if(n===11)return'Lessons';if(n===12)return'Closing'}
