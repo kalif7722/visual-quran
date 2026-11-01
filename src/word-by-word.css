@@ -71,3 +71,4 @@
 .word-verse-card{direction:ltr}
 
 .word-verse-card.lesson-verse-target{outline:3px solid #b8872d;outline-offset:3px;scroll-margin-top:110px}
+.word-surah-dropdown{display:flex;flex-direction:column;gap:8px;margin:0 0 20px;color:#20564b;font-size:13px;font-weight:700}.word-surah-dropdown select{width:100%;max-width:580px;min-height:48px;padding:11px 14px;border:1px solid #bed6cb;border-radius:12px;background:#fff;color:#214d43;font:inherit;font-size:15px;box-shadow:0 3px 12px #173c3c08}.word-surah-dropdown select:focus-visible{outline:3px solid #c69c42;outline-offset:3px}
