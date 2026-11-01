@@ -28,3 +28,4 @@
 @media(max-width:800px){.ql-grid{gap:20px}.ql-card-copy{padding:20px}.ql-card-copy h2{font-size:26px}}
 @media(max-width:550px){.ql-grid{gap:24px}.ql-card-cover{aspect-ratio:16/10}.ql-card-copy{padding:22px}.ql-card-copy h2{font-size:29px}.ql-card-copy p{font-size:15px}.ql-card-footer{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.ql-cover-card,.ql-card-cover img{transition:none}.ql-cover-card:hover,.ql-cover-card:hover .ql-story-cover img{transform:none}}
+.lesson-title-en{display:block;font:500 .53em/1.35 'DM Sans',sans-serif;color:#68817b;margin-top:6px}
