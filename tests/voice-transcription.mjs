@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {serveVoiceTranscription} from '../src/voice-transcription.js';
+const url='https://example.test/api/voice-transcribe?lang=ta';
+let called=0;
+const env={AI:{run:async(model,params)=>{called++;assert.equal(model,'@cf/openai/whisper-large-v3-turbo');assert.equal(params.language,'ta');assert.equal(params.task,'transcribe');assert.equal(atob(params.audio),'test audio');return {text:'சூரா ஃபாத்திஹா'}}}};
+const request=(method='POST',type='audio/webm',body='test audio')=>new Request(url,{method,headers:{'Content-Type':type},body:method==='POST'?body:undefined});
+assert.equal((await serveVoiceTranscription(request('GET'),env)).status,405);
+assert.equal((await serveVoiceTranscription(request('POST','text/plain'),env)).status,415);
+assert.equal((await serveVoiceTranscription(request(),{})).status,503);
+assert.deepEqual(await (await serveVoiceTranscription(request(),env)).json(),{text:'சூரா ஃபாத்திஹா'});
+assert.equal(called,1);
+console.log('Voice transcription method, type, missing binding, Tamil locale and result passed.');

@@ -1,5 +1,6 @@
 import{serveSlideList}from'./slide-source.js';
 import{serveVerseChapter}from'./verse-source.js';
+import{serveVoiceTranscription}from'./voice-transcription.js';
 
 const corsHeaders={
   'Access-Control-Allow-Origin':'*',
@@ -18,6 +19,8 @@ export default {
     const url = new URL(request.url);
 
     if(request.method==='OPTIONS')return new Response(null,{status:204,headers:corsHeaders});
+
+    if (url.pathname === '/api/voice-transcribe') return serveVoiceTranscription(request,env);
 
     if (url.pathname.startsWith('/api/surah-slides/')) return withCors(await serveSlideList(request,env));
 
