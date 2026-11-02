@@ -1,5 +1,5 @@
 import{surahs}from'./data.js';
-const editions={en:'english_rwwad',ta:'tamil_baqavi',ur:'urdu_junagarhi'};
+const editions={en:'english_rwwad',ta:'tamil_baqavi',ur:'urdu_junagarhi',hi:'hindi_omari'};
 export async function serveVerseChapter(request,{fetchSource=fetch,cache=globalThis.caches?.default}={}){
  const url=new URL(request.url),match=url.pathname.match(/^\/api\/theme-verses\/(\d{1,3})$/),number=Number(match?.[1]);
  const language=url.searchParams.get('lang')||'en',key=editions[language];

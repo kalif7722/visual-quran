@@ -4,7 +4,7 @@ export async function serveVoiceTranscription(request,env){
  if(request.method!=='POST')return Response.json({error:'Method not allowed'},{status:405,headers});
  const type=request.headers.get('content-type')||'';
  const language=new URL(request.url).searchParams.get('lang')||'en';
- if(!['en','ta','ar','ur'].includes(language)||!/^audio\/(webm|ogg|mp4|mpeg|wav)/i.test(type))return Response.json({error:'Unsupported audio or language'},{status:415,headers});
+ if(!['en','ta','ar','ur','hi'].includes(language)||!/^audio\/(webm|ogg|mp4|mpeg|wav)/i.test(type))return Response.json({error:'Unsupported audio or language'},{status:415,headers});
  const length=Number(request.headers.get('content-length')||0);
  if(length>2_000_000)return Response.json({error:'Recording too large'},{status:413,headers});
  if(!env.AI)return Response.json({error:'Speech transcription is not configured'},{status:503,headers});
