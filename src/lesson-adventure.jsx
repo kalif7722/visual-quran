@@ -18,6 +18,11 @@ export function StoryAdventure({lesson}){
  const[choice,setChoice]=useState(null);const[showEnding,setShowEnding]=useState(false);
  if(!adventure)return <section><h2>Let's read the story</h2><p className="ql-story">{lesson.story}</p></section>;
  const split=adventure.decisionAfter||2;
- const scene=(item,index)=><section className="ql-story-scene" key={item.image}><div className="ql-scene-heading"><span>{String(index+1).padStart(2,'0')}</span><h2>{item.title}</h2></div><figure><img src={item.image} alt={item.alt} loading={index?'lazy':'eager'} width="1536" height="1024"/><figcaption>{item.text.split(/\n\n+/).map((paragraph,i)=><p key={i}>{paragraph}</p>)}</figcaption></figure><blockquote><span>{item.speaker}</span><p>“{item.dialogue}”</p></blockquote></section>;
+ const scene=(item,index)=><section className="ql-story-scene" key={item.image}>
+  <div className="ql-scene-heading"><span>{String(index+1).padStart(2,'0')}</span><h2>{item.title}</h2></div>
+  <div className="ql-scene-narration">{item.text.split(/\n\n+/).map((paragraph,i)=><p key={i}>{paragraph}</p>)}</div>
+  <blockquote><span>{item.speaker}</span><p>“{item.dialogue}”</p></blockquote>
+  <figure className="ql-scene-image"><img src={item.image} alt={item.alt} loading={index?'lazy':'eager'} width="1536" height="1024"/></figure>
+ </section>;
  return <div className="ql-adventure"><p className="ql-adventure-theme">{adventure.theme}</p>{adventure.scenes.slice(0,split).map(scene)}<section className="ql-decision"><span>PAUSE THE STORY</span><h2>{adventure.decision.question}</h2><p>Choose an answer to explore what it would mean.</p><div className="ql-choice-list">{adventure.decision.choices.map((item,index)=><button key={item.text} aria-pressed={choice===index} onClick={()=>setChoice(index)}><b>{String.fromCharCode(65+index)}</b><span>{item.text}</span></button>)}</div>{choice!==null&&<p className="ql-feedback" role="status">{adventure.decision.choices[choice].feedback}</p>}<button className="ql-reveal" onClick={()=>setShowEnding(v=>!v)} aria-expanded={showEnding}>{showEnding?'Hide the ending':'See what happened next →'}</button></section>{showEnding&&adventure.scenes.slice(split).map((item,i)=>scene(item,split+i))}<div className="ql-word"><span>WORD TO REMEMBER</span><h3>{adventure.word.term}</h3><p>{adventure.word.meaning}</p></div><p className="ql-takeaway">{adventure.remember}</p></div>;
 }
