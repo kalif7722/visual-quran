@@ -9,6 +9,7 @@ import {StoryAdventure,LessonActivities} from './lesson-adventure';
 import adventures from './lesson-adventures.json';
 import tamilTitles from './lesson-titles-ta.json';
 import tamilContent from './lesson-content-ta.json';
+import sceneTamil from './lesson-scene-ta.json';
 import hadithLessons from './lesson-hadith.json';
 
 const categoryTa={
@@ -32,11 +33,28 @@ function HadithCard({lessonId,ta}){
 }
 function TamilLessonStory({lesson}){
  const item=tamilContent[lesson.id];
- const adventure=adventures[lesson.id];
  if(!item)return <section lang="ta"><h2>கதையைப் படிப்போம்</h2><p>{lesson.story}</p></section>;
+ const paragraphs=item.story.split(/\n\n+/).filter(Boolean);
+ const scenes=adventures[lesson.id]?.scenes||[];
+ const localized=sceneTamil[lesson.id]||[];
+ const sceneLengths=scenes.map(scene=>scene.text.split(/\n\n+/).length);
+ // Only pair pictures with narration when the original and translated scene boundaries agree.
+ const aligned=scenes.length>0&&scenes.length===localized.length&&sceneLengths.reduce((a,b)=>a+b,0)===paragraphs.length;
+ let offset=0;
+ const pairedScenes=aligned?scenes.map((scene,index)=>{
+  const narration=paragraphs.slice(offset,offset+sceneLengths[index]);
+  offset+=sceneLengths[index];
+  return {image:scene.image,title:localized[index].title,speaker:localized[index].speaker,dialogue:localized[index].dialogue,narration};
+ }):[];
  return <div className="ql-ta-content" lang="ta">
-  <section className="ql-ta-story"><h2>கதையைப் படிப்போம்</h2>{item.story.split(/\n\n+/).map((p,i)=><p key={i}>{p}</p>)}</section>
-  {adventure?.scenes?.length?<section className="ql-ta-illustrations" aria-label="பாடத்தின் படங்கள்"><h2>கதையின் படங்கள்</h2><div>{adventure.scenes.map((scene,i)=><figure key={scene.image}><img src={scene.image} alt={`பாடம் ${lesson.id} - கதைப் படம் ${i+1}`} loading={i?'lazy':'eager'} width="1536" height="1024"/></figure>)}</div></section>:null}
+  <section className="ql-ta-story"><h2>கதையைப் படிப்போம்</h2>
+   {aligned?pairedScenes.map((scene,index)=><section className="ql-story-scene ql-ta-scene" key={scene.image}>
+    <div className="ql-scene-heading"><span>{String(index+1).padStart(2,'0')}</span><h2>{scene.title}</h2></div>
+    <div className="ql-scene-narration">{scene.narration.map((p,i)=><p key={i}>{p}</p>)}</div>
+    <blockquote><span>{scene.speaker}</span><p>“{scene.dialogue}”</p></blockquote>
+    <figure className="ql-scene-image"><img src={scene.image} alt={scene.title} loading={index?'lazy':'eager'} width="1536" height="1024"/></figure>
+   </section>):<>{paragraphs.map((p,i)=><p key={i}>{p}</p>)}{scenes.length>0?<section className="ql-ta-illustrations" aria-label="கதையின் படங்கள்">{scenes.map((scene,index)=><figure key={scene.image}><img src={scene.image} alt={localized[index]?.title||'கதைப் படம்'} loading="lazy" width="1536" height="1024"/></figure>)}</section>:null}</>}
+  </section>
   <section className="ql-meaning"><h2>இதன் பொருள் என்ன?</h2><p>{item.concept}</p></section>
   <div className="ql-boxes ql-ta-prompts"><section><span>சிந்தித்துப் பாருங்கள்</span><h3>உங்கள் எண்ணம் என்ன?</h3><p>{item.reflection}</p></section><section><span>இன்றைய சிறிய செயல்</span><h3>வாழ்வில் முயற்சி செய்</h3><p>{item.action}</p></section></div>
   {item.remember?<p className="ql-takeaway">{item.remember}</p>:null}
