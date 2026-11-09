@@ -39,6 +39,7 @@ function TamilLessonStory({lesson}){
   {adventure?.scenes?.length?<section className="ql-ta-illustrations" aria-label="பாடத்தின் படங்கள்"><h2>கதையின் படங்கள்</h2><div>{adventure.scenes.map((scene,i)=><figure key={scene.image}><img src={scene.image} alt={`பாடம் ${lesson.id} - கதைப் படம் ${i+1}`} loading={i?'lazy':'eager'} width="1536" height="1024"/></figure>)}</div></section>:null}
   <section className="ql-meaning"><h2>இதன் பொருள் என்ன?</h2><p>{item.concept}</p></section>
   <div className="ql-boxes ql-ta-prompts"><section><span>சிந்தித்துப் பாருங்கள்</span><h3>உங்கள் எண்ணம் என்ன?</h3><p>{item.reflection}</p></section><section><span>இன்றைய சிறிய செயல்</span><h3>வாழ்வில் முயற்சி செய்</h3><p>{item.action}</p></section></div>
+  {item.remember?<p className="ql-takeaway">{item.remember}</p>:null}
  </div>;
 }
 function LessonCard({lesson,index,ta}){
